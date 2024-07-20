@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { SpeedInsights } from "@vercel/speed-insights/react"
+import { Analytics } from "@vercel/analytics/react"
 import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SiLeetcode } from 'react-icons/si';
@@ -335,6 +336,7 @@ const App = () => (
                     <Route path="/contact" element={<Contact />} />
                 </Routes>
             </AnimatePresence>
+            <Analytics/>
             <SpeedInsights />
         </div>
     </Router>
