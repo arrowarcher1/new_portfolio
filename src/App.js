@@ -17,8 +17,6 @@ const NavLink = ({ to, children, icon }) => {
     );
 };
 
-<SpeedInsights/>
-
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -337,6 +335,7 @@ const App = () => (
                     <Route path="/contact" element={<Contact />} />
                 </Routes>
             </AnimatePresence>
+            <SpeedInsights />
         </div>
     </Router>
 );
