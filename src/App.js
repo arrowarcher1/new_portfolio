@@ -203,7 +203,7 @@ const ProjectCard = ({ title, description, onClick }) => (
 
 const ProjectModal = ({ project, onClose }) => (
     <motion.div
-        className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
+        className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -246,6 +246,16 @@ const ProjectModal = ({ project, onClose }) => (
                 </a>
             )}
 
+            {project.link && (
+                <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 ml-4"
+                >
+                    Visit Website
+                </a>
+            )}
         </motion.div>
     </motion.div>
 );
@@ -254,6 +264,19 @@ const Projects = () => {
     const [selectedProject, setSelectedProject] = useState(null);
 
     const projects = [
+        {
+            title: "Personal Portfolio Website",
+            description: "Developed a responsive and modern portfolio website using React.js and Tailwind CSS.",
+            fullDescription: "Created a sleek, responsive portfolio website to showcase my projects and skills. This website serves as a dynamic representation of my work and abilities in web development.",
+            technologies: ["React.js", "Tailwind CSS", "Node.js", "Vercel", "JavaScript", "Git"],
+            achievements: [
+                "Implemented responsive design for optimal viewing across all devices",
+                "Utilized Tailwind CSS for efficient and consistent styling",
+                "Deployed on Vercel for continuous integration and seamless updates",
+                "Integrated dynamic content management for easy project updates"
+            ],
+            link: "https://andrewvo.dev"
+        },
         {
             title: "Lehigh Hacks for Health - LCRS",
             description: "Developed a predictive model for lung cancer risk assessment using Google Cloud's Vertex AI and AutoML.",
@@ -283,7 +306,7 @@ const Projects = () => {
         <PageTransition>
             <div className="container mx-auto px-4 py-16">
                 <h2 className="text-3xl font-bold mb-8 text-blue-600">Projects</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {projects.map((project, index) => (
                         <ProjectCard
                             key={index}
