@@ -263,74 +263,70 @@ const ProjectModal = ({ project, onClose }) => (
 const Projects = () => {
     const [selectedProject, setSelectedProject] = useState(null);
 
-    const Projects = () => {
-        const [selectedProject, setSelectedProject] = useState(null);
-    
-        const projects = [
-            {
-                title: "Personal Portfolio Website",
-                description: "Developed a responsive and modern portfolio website using React.js and Tailwind CSS.",
-                fullDescription: "Created a sleek, responsive portfolio website to showcase my projects and skills. This website serves as a dynamic representation of my work and abilities in web development.",
-                technologies: ["React.js", "Tailwind CSS", "Node.js", "Vercel", "JavaScript", "Git"],
-                achievements: [
-                    "Implemented responsive design for optimal viewing across all devices",
-                    "Utilized Tailwind CSS for efficient and consistent styling",
-                    "Deployed on Vercel for continuous integration and seamless updates",
-                    "Integrated dynamic content management for easy project updates"
-                ],
-                link: "https://andrewvo.dev"
-            },
-            {
-                title: "Lehigh Hacks for Health - LCRS",
-                description: "Developed a predictive model for lung cancer risk assessment using Google Cloud's Vertex AI and AutoML.",
-                fullDescription: "Led a team in developing an innovative lung cancer risk assessment tool during the Lehigh Hacks for Health hackathon. Our solution aimed to provide accessible pre-screening for individuals in lower-income communities, potentially improving early detection rates.",
-                technologies: ["Google Cloud Vertex AI", "AutoML", "Python", "Google Cloud Compute"],
-                achievements: [
-                    "Awarded 'Best First-Year Solution'",
-                    "Created a cost-effective pre-screening process",
-                    "Utilized advanced machine learning techniques for accurate risk assessments"
-                ]
-            },
-            {
-                title: "ASL for the Community",
-                description: "Created an image recognition model using Amazon SageMaker to translate ASL signs into text and speech.",
-                fullDescription: "Developed an innovative solution to bridge communication gaps between the deaf and hearing communities. Our team created an image recognition model capable of translating American Sign Language (ASL) signs into text and speech in real-time.",
-                technologies: ["Amazon SageMaker", "Python", "Amazon Polly", "Turtle Graphics"],
-                achievements: [
-                    "Received the 'Best AWS Integration' award",
-                    "Implemented real-time ASL translation to text and speech",
-                    "Designed a user-friendly interface for easy interaction"
-                ],
-                devpostLink: "https://devpost.com/software/asl-for-the-community"
-            }
-        ];
-    
-        return (
-            <PageTransition>
-                <div className="container mx-auto px-4 py-16">
-                    <h2 className="text-3xl font-bold mb-8 text-blue-600">Projects</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {projects.map((project, index) => (
-                            <ProjectCard
-                                key={index}
-                                title={project.title}
-                                description={project.description}
-                                onClick={() => setSelectedProject(project)}
-                            />
-                        ))}
-                    </div>
-                </div>
-                <AnimatePresence>
-                    {selectedProject && (
-                        <ProjectModal
-                            project={selectedProject}
-                            onClose={() => setSelectedProject(null)}
+    const projects = [
+        {
+            title: "Personal Portfolio Website",
+            description: "Developed a responsive and modern portfolio website using React.js and Tailwind CSS.",
+            fullDescription: "Created a sleek, responsive portfolio website to showcase my projects and skills. This website serves as a dynamic representation of my work and abilities in web development.",
+            technologies: ["React.js", "Tailwind CSS", "Node.js", "Vercel", "JavaScript", "Git"],
+            achievements: [
+                "Implemented responsive design for optimal viewing across all devices",
+                "Utilized Tailwind CSS for efficient and consistent styling",
+                "Deployed on Vercel for continuous integration and seamless updates",
+                "Integrated dynamic content management for easy project updates"
+            ],
+            link: "https://andrewvo.dev"
+        },
+        {
+            title: "Lehigh Hacks for Health - LCRS",
+            description: "Developed a predictive model for lung cancer risk assessment using Google Cloud's Vertex AI and AutoML.",
+            fullDescription: "Led a team in developing an innovative lung cancer risk assessment tool during the Lehigh Hacks for Health hackathon. Our solution aimed to provide accessible pre-screening for individuals in lower-income communities, potentially improving early detection rates.",
+            technologies: ["Google Cloud Vertex AI", "AutoML", "Python", "Google Cloud Compute"],
+            achievements: [
+                "Awarded 'Best First-Year Solution'",
+                "Created a cost-effective pre-screening process",
+                "Utilized advanced machine learning techniques for accurate risk assessments"
+            ]
+        },
+        {
+            title: "ASL for the Community",
+            description: "Created an image recognition model using Amazon SageMaker to translate ASL signs into text and speech.",
+            fullDescription: "Developed an innovative solution to bridge communication gaps between the deaf and hearing communities. Our team created an image recognition model capable of translating American Sign Language (ASL) signs into text and speech in real-time.",
+            technologies: ["Amazon SageMaker", "Python", "Amazon Polly", "Turtle Graphics"],
+            achievements: [
+                "Received the 'Best AWS Integration' award",
+                "Implemented real-time ASL translation to text and speech",
+                "Designed a user-friendly interface for easy interaction"
+            ],
+            devpostLink: "https://devpost.com/software/asl-for-the-community"
+        }
+    ];
+
+    return (
+        <PageTransition>
+            <div className="container mx-auto px-4 py-16">
+                <h2 className="text-3xl font-bold mb-8 text-blue-600">Projects</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {projects.map((project, index) => (
+                        <ProjectCard
+                            key={index}
+                            title={project.title}
+                            description={project.description}
+                            onClick={() => setSelectedProject(project)}
                         />
-                    )}
-                </AnimatePresence>
-            </PageTransition>
-        );
-    };
+                    ))}
+                </div>
+            </div>
+            <AnimatePresence>
+                {selectedProject && (
+                    <ProjectModal
+                        project={selectedProject}
+                        onClose={() => setSelectedProject(null)}
+                    />
+                )}
+            </AnimatePresence>
+        </PageTransition>
+    );
 };
 
 const Contact = () => (
