@@ -345,8 +345,8 @@ const Projects = () => {
 const Contact = () => (
     <PageTransition>
         <div className="container mx-auto px-4 py-16">
-            <h2 className="text-3xl font-bold mb-8 text-blue-600">Contact Me</h2>
-            <div className="bg-secondary-bg dark:bg-gray-800 shadow-lg rounded-lg p-6">
+            <h2 className="text-3xl font-bold mb-8 text-primary">Contact Me</h2>
+            <div className="bg-secondary-bg shadow-lg rounded-lg p-6 border border-border-color">
                 <p className="text-lg mb-4">Email: andrew@andrewvo.dev</p>
                 <p className="text-lg mb-4">Phone: (818) 699-2337</p>
                 <p className="text-lg">
