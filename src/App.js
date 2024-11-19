@@ -278,6 +278,19 @@ const Projects = () => {
             link: "https://andrewvo.dev"
         },
         {
+            title: "ProfPair",
+            description: "Built an AI-powered professor-student matching system using AWS services to help students find compatible professors.",
+            fullDescription: "Developed an innovative web platform that uses AI to predict student-professor compatibility. The system analyzes professor ratings and student preferences using AWS Comprehend for sentiment analysis and SageMaker for compatibility predictions, helping students make informed decisions about course selection.",
+            technologies: ["AWS Comprehend", "Amazon SageMaker", "Python", "HTML", "AWS S3"],
+            achievements: [
+                "Successfully integrated multiple AWS services into a cohesive web platform",
+                "Developed custom AI model for professor-student compatibility matching",
+                "Created comprehensive scoring algorithm incorporating multiple rating factors",
+                "Implemented sentiment analysis for professor review evaluation"
+            ],
+            devpostLink: "https://devpost.com/software/profpair"
+        },
+        {
             title: "Lehigh Hacks for Health - LCRS",
             description: "Developed a predictive model for lung cancer risk assessment using Google Cloud's Vertex AI and AutoML.",
             fullDescription: "Led a team in developing an innovative lung cancer risk assessment tool during the Lehigh Hacks for Health hackathon. Our solution aimed to provide accessible pre-screening for individuals in lower-income communities, potentially improving early detection rates.",
