@@ -4,24 +4,28 @@
 
 :root {
     /* Light theme */
-    --background: #ffffff;
+    --background: #f1f1f1;
     --text: #333333;
     --primary: #007bff;
     --secondary-bg: #f8f9fa;
     --card-bg: #ffffff;
     --border-color: #dee2e6;
     --shadow: rgba(0, 0, 0, 0.1);
+    --navbar-bg: #ffffff;
+    --button-hover: #E6F0FF;
   }
 
   [data-theme="dark"] {
     /* Dark theme */
-    --background: #121212;
+    --background: #252525;
     --text: #ffffff;
     --primary: #4da3ff;
     --secondary-bg: #1e1e1e;
-    --card-bg: #2d2d2d;
+    --card-bg: #424242;
     --border-color: #404040;
     --shadow: rgba(0, 0, 0, 0.3);
+    --navbar-bg: #2A2A2A;
+    --button-hover: #273d57;
   }
 
 /* Apply these variables to your elements */
@@ -76,10 +80,3 @@ a {
   transform: scale(0.95);
 }
 
-
-.card, 
-.container {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  box-shadow: 0 2px 4px var(--shadow);
-}

@@ -9,7 +9,7 @@ const NavLink = ({ to, children, icon }) => {
     const isActive = location.pathname === to;
 
     return (
-        <Link to={to} className={`flex items-center px-4 py-2 rounded-lg transition-colors duration-200 ${isActive ? 'bg-blue-600 text-white' : 'text-gray-700 hover:bg-blue-100'}`}>
+        <Link to={to} className={`flex items-center px-4 py-2 rounded-lg transition-colors duration-200 ${isActive ? 'bg-blue-600 text-white' : 'text-text hover:bg-button-hover'}`}>
             {icon}
             <span className="ml-2">{children}</span>
         </Link>
@@ -20,7 +20,7 @@ const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <header className="bg-white shadow-md">
+        <header className="bg-navbar-bg shadow-md">
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
                 <h1 className="text-2xl font-bold text-blue-600">Andrew Van Ostrand</h1>
                 <button onClick={() => setIsOpen(!isOpen)} className="md:hidden">
@@ -28,7 +28,7 @@ const Header = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
-                <nav className={`absolute md:relative top-16 left-0 right-0 bg-white md:top-0 md:flex ${isOpen ? 'block' : 'hidden'} md:block`}>
+                <nav className={`absolute md:relative top-16 left-0 right-0 bg-navbar-bg md:top-0 md:flex ${isOpen ? 'block' : 'hidden'} md:block`}>
                     <ul className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 p-4 md:p-0">
                         <li><NavLink to="/" icon={<FaHome className="inline" />}>Home</NavLink></li>
                         <li><NavLink to="/about" icon={<FaUser className="inline" />}>About</NavLink></li>
@@ -78,7 +78,7 @@ const Home = () => (
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
             >
-                <p className="text-lg text-gray-700 mb-4">
+                <p className="text-lg text-text mb-4">
                     Welcome to my portfolio! I'm a dedicated student at Lehigh University, passionate about leveraging technology to solve real-world problems. Explore my projects and journey in the world of computer science and business.
                 </p>
                 <Link to="/projects" className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200">
@@ -111,25 +111,25 @@ const Home = () => (
 const About = () => (
     <PageTransition>
         <div className="container mx-auto px-4 py-16">
-            <h2 className="text-3xl font-bold mb-8 text-blue-600">About Me</h2>
-            <div className="bg-secondary-bg shadow-lg rounded-lg p-6">
-                <p className="text-lg text-gray-700 mb-4">I'm Andrew Van Ostrand, a passionate and driven student at Lehigh University, pursuing a Bachelor of Science in Computer Science & Business with a minor in Environmental Science. Expected to graduate in May 2027, I'm on a mission to blend my technical skills with business acumen to create innovative solutions for a sustainable future.</p>
+            <h2 className="text-3xl font-bold mb-8 text-primary">About Me</h2>
+            <div className="bg-card-bg shadow-lg rounded-lg p-6">
+                <p className="text-lg text-text mb-4">I'm Andrew Van Ostrand, a passionate and driven student at Lehigh University, pursuing a Bachelor of Science in Computer Science & Business with a minor in Environmental Science. Expected to graduate in May 2027, I'm on a mission to blend my technical skills with business acumen to create innovative solutions for a sustainable future.</p>
 
                 <h3 className="text-xl font-semibold mb-2 text-blue-600">Education</h3>
-                <ul className="list-disc list-inside mb-4 text-gray-700">
+                <ul className="list-disc list-inside mb-4 text-text">
                     <li>Bachelor of Science: Computer Science & Business</li>
                     <li>Minor: Environmental Science</li>
                     <li>Expected Graduation: May 2027</li>
                 </ul>
 
                 <h3 className="text-xl font-semibold mb-2 text-blue-600">Skills</h3>
-                <ul className="list-disc list-inside mb-4 text-gray-700">
+                <ul className="list-disc list-inside mb-4 text-text">
                     <li>Programming Languages: Java, JavaScript, HTML, CSS, Python</li>
                     <li>Languages: Fluent in English and Spanish</li>
                 </ul>
 
                 <h3 className="text-xl font-semibold mb-2 text-blue-600">Interests</h3>
-                <p className="text-gray-700">
+                <p className="text-text">
                     Beyond academics, I'm passionate about leveraging technology for environmental sustainability, participating in hackathons, and exploring the intersection of business and technology. In my free time, I enjoy contributing to open-source projects and mentoring aspiring programmers.
                 </p>
             </div>
@@ -148,7 +148,7 @@ const Resume = () => {
         <PageTransition>
             <div className="container mx-auto px-4 py-16">
                 <h2 className="text-3xl font-bold mb-8 text-primary">Resume</h2>
-                <div className={`bg-secondary-bg shadow-lg rounded-lg p-6 border border-border-color ${isFullScreen ? 'fixed inset-0 z-50' : ''}`}>
+                <div className={`bg-card-bg shadow-lg rounded-lg p-6 border border-border-color ${isFullScreen ? 'fixed inset-0 z-50' : ''}`}>
                     <div className="flex justify-between items-center mb-4">
                         <p className="text-lg">
                             Preview my resume below or download the full PDF.
@@ -191,19 +191,19 @@ const Resume = () => {
 
 const ProjectCard = ({ title, description, onClick }) => (
     <motion.div
-        className="bg-white p-6 rounded-lg shadow-lg cursor-pointer"
-        whileHover={{ scale: 1.05 }}
+        className="bg-card-bg p-6 rounded-lg shadow-lg cursor-pointer border border-border-color"
+        whileHover={{ scale: 1.07 }}
         transition={{ duration: 0.2 }}
         onClick={onClick}
     >
-        <h3 className="text-2xl font-bold mb-2 text-blue-600">{title}</h3>
-        <p className="text-gray-700">{description}</p>
+        <h3 className="text-2xl font-bold mb-2 text-primary">{title}</h3>
+        <p className="text-text">{description}</p>
     </motion.div>
 );
 
 const ProjectModal = ({ project, onClose }) => (
     <motion.div
-        className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+        className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -346,7 +346,7 @@ const Contact = () => (
     <PageTransition>
         <div className="container mx-auto px-4 py-16">
             <h2 className="text-3xl font-bold mb-8 text-primary">Contact Me</h2>
-            <div className="bg-secondary-bg shadow-lg rounded-lg p-6 border border-border-color">
+            <div className="bg-card-bg shadow-lg rounded-lg p-6 border border-border-color">
                 <p className="text-lg mb-4">Email: andrew@andrewvo.dev</p>
                 <p className="text-lg mb-4">Phone: (818) 699-2337</p>
                 <p className="text-lg">
