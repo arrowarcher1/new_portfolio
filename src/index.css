@@ -76,9 +76,6 @@ a {
   transform: scale(0.95);
 }
 
-.section {
-    background-color: var(--secondary-bg);
-  }
 
 .card, 
 .container {
