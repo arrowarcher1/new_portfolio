@@ -359,14 +359,13 @@ const Contact = () => (
 
 const App = () => {
     const [theme, setTheme] = useState(() => {
-        // Check localStorage first, then system preference
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) return savedTheme;
         return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     });
 
     useEffect(() => {
-        // Update data-theme attribute and localStorage when theme changes
+        console.log('Theme changed to:', theme);
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
     }, [theme]);
@@ -377,13 +376,12 @@ const App = () => {
 
     return (
         <Router>
-            <div className="min-h-screen bg-gray-100">
+            <div className={`App ${theme}`}>
                 <Header />
                 <button 
                     onClick={toggleTheme}
                     className="theme-toggle"
-                    aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
-                >
+                    aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}>
                     {theme === 'dark' ? '☀️' : '🌙'}
                 </button>
                 <AnimatePresence mode="wait">

@@ -3,32 +3,52 @@
 @tailwind utilities;
 
 :root {
-  /* Light theme variables */
+  /* Light theme (default) */
   --background: #ffffff;
   --text: #333333;
   --primary: #007bff;
+  --secondary-bg: #f8f9fa;
+  --border-color: #dee2e6;
 }
 
 [data-theme="dark"] {
-  /* Dark theme variables */
   --background: #1a1a1a;
   --text: #ffffff;
   --primary: #4da3ff;
+  --secondary-bg: #2d2d2d;
+  --border-color: #404040;
 }
 
+/* Apply these variables to your elements */
 body {
+  margin: 0;
   background-color: var(--background);
   color: var(--text);
   transition: all 0.3s ease;
 }
 
+.App {
+  min-height: 100vh;
+  background-color: var(--background);
+  color: var(--text);
+}
+
+/* Example styles for common elements */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text);
+}
+
+a {
+  color: var(--primary);
+}
+
+/* Your theme toggle styles */
 .theme-toggle {
   position: fixed;
   top: 1rem;
   right: 1rem;
   width: 40px;
   height: 40px;
-  padding: 0;
   border-radius: 50%;
   border: 2px solid var(--primary);
   background: var(--background);
