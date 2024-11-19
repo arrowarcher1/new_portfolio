@@ -346,11 +346,11 @@ const Contact = () => (
     <PageTransition>
         <div className="container mx-auto px-4 py-16">
             <h2 className="text-3xl font-bold mb-8 text-blue-600">Contact Me</h2>
-            <div className="bg-white shadow-lg rounded-lg p-6">
-                <p className="text-lg text-gray-700 mb-4">Email: andrew@andrewvo.dev</p>
-                <p className="text-lg text-gray-700 mb-4">Phone: (818) 699-2337</p>
-                <p className="text-lg text-gray-700">
-                    LinkedIn: <a href="https://linkedin.com/in/andrew-v-o/" className="text-blue-500 hover:underline">linkedin.com/in/andrew-v-o/</a>
+            <div className="bg-secondary-bg shadow-lg rounded-lg p-6">
+                <p className="text-lg mb-4">Email: andrew@andrewvo.dev</p>
+                <p className="text-lg mb-4">Phone: (818) 699-2337</p>
+                <p className="text-lg">
+                    LinkedIn: <a href="https://linkedin.com/in/andrew-v-o/" className="text-primary hover:underline">linkedin.com/in/andrew-v-o/</a>
                 </p>
             </div>
         </div>

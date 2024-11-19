@@ -70,20 +70,3 @@ a {
 .theme-toggle:active {
   transform: scale(0.95);
 }
-
-/* Example component styles */
-.card {
-  background-color: var(--secondary-bg);
-  border: 1px solid var(--border-color);
-  color: var(--text);
-}
-
-.navbar {
-  background-color: var(--background);
-  border-bottom: 1px solid var(--border-color);
-}
-
-.footer {
-  background-color: var(--secondary-bg);
-  color: var(--text);
-}
