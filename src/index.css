@@ -3,21 +3,26 @@
 @tailwind utilities;
 
 :root {
-  /* Light theme (default) */
-  --background: #ffffff;
-  --text: #333333;
-  --primary: #007bff;
-  --secondary-bg: #9da0a3;
-  --border-color: #dee2e6;
-}
+    /* Light theme */
+    --background: #ffffff;
+    --text: #333333;
+    --primary: #007bff;
+    --secondary-bg: #f8f9fa;
+    --card-bg: #ffffff;
+    --border-color: #dee2e6;
+    --shadow: rgba(0, 0, 0, 0.1);
+  }
 
-[data-theme="dark"] {
-  --background: #424242;
-  --text: #ffffff;
-  --primary: #4da3ff;
-  --secondary-bg: #252525;
-  --border-color: rgba(236, 87, 87, 0.217);
-}
+  [data-theme="dark"] {
+    /* Dark theme */
+    --background: #121212;
+    --text: #ffffff;
+    --primary: #4da3ff;
+    --secondary-bg: #1e1e1e;
+    --card-bg: #2d2d2d;
+    --border-color: #404040;
+    --shadow: rgba(0, 0, 0, 0.3);
+  }
 
 /* Apply these variables to your elements */
 body {
@@ -71,3 +76,13 @@ a {
   transform: scale(0.95);
 }
 
+.section {
+    background-color: var(--secondary-bg);
+  }
+
+.card, 
+.container {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px var(--shadow);
+}
