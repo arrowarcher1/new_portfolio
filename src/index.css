@@ -6,7 +6,7 @@
   /* Light theme (default) */
   --background: #ffffff;
   --text: #333333;
-  --primary: #245b95;
+  --primary: #007bff;
   --secondary-bg: #f8f9fa;
   --border-color: #dee2e6;
 }
@@ -14,8 +14,8 @@
 [data-theme="dark"] {
   --background: #1a1a1a;
   --text: #ffffff;
-  --primary: #245b95;
-  --secondary-bg: #3e3d3d;
+  --primary: #4da3ff;
+  --secondary-bg: #2d2d2d;
   --border-color: #404040;
 }
 
@@ -70,3 +70,4 @@ a {
 .theme-toggle:active {
   transform: scale(0.95);
 }
+
