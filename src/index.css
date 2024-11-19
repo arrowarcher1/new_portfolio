@@ -12,11 +12,11 @@
 }
 
 [data-theme="dark"] {
-  --background: #1a1a1a;
+  --background: #424242;
   --text: #ffffff;
   --primary: #4da3ff;
-  --secondary-bg: #2d2d2d;
-  --border-color: #404040;
+  --secondary-bg: #252525;
+  --border-color: rgba(236, 87, 87, 0.217);
 }
 
 /* Apply these variables to your elements */
