@@ -1,3 +1,40 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  /* Light theme variables */
+  --background: #ffffff;
+  --text: #333333;
+  --primary: #007bff;
+}
+
+[data-theme="dark"] {
+  /* Dark theme variables */
+  --background: #1a1a1a;
+  --text: #ffffff;
+  --primary: #4da3ff;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+  transition: all 0.3s ease;
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem;
+  border-radius: 50%;
+  border: none;
+  background: var(--primary);
+  color: var(--background);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
