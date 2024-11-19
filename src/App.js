@@ -112,7 +112,7 @@ const About = () => (
     <PageTransition>
         <div className="container mx-auto px-4 py-16">
             <h2 className="text-3xl font-bold mb-8 text-blue-600">About Me</h2>
-            <div className="bg-white shadow-lg rounded-lg p-6">
+            <div className="bg-secondary-bg shadow-lg rounded-lg p-6">
                 <p className="text-lg text-gray-700 mb-4">I'm Andrew Van Ostrand, a passionate and driven student at Lehigh University, pursuing a Bachelor of Science in Computer Science & Business with a minor in Environmental Science. Expected to graduate in May 2027, I'm on a mission to blend my technical skills with business acumen to create innovative solutions for a sustainable future.</p>
 
                 <h3 className="text-xl font-semibold mb-2 text-blue-600">Education</h3>
