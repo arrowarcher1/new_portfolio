@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SiLeetcode } from 'react-icons/si';
@@ -357,21 +357,47 @@ const Contact = () => (
     </PageTransition>
 );
 
-const App = () => (
-    <Router>
-        <div className="min-h-screen bg-gray-100">
-            <Header />
-            <AnimatePresence mode="wait">
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/projects" element={<Projects />} />
-                    <Route path="/resume" element={<Resume />} />
-                    <Route path="/contact" element={<Contact />} />
-                </Routes>
-            </AnimatePresence>
-        </div>
-    </Router>
-);
+const App = () => {
+    const [theme, setTheme] = useState(() => {
+        // Check localStorage first, then system preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) return savedTheme;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    });
+
+    useEffect(() => {
+        // Update data-theme attribute and localStorage when theme changes
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+    }, [theme]);
+
+    const toggleTheme = () => {
+        setTheme(prevTheme => prevTheme === 'dark' ? 'light' : 'dark');
+    };
+
+    return (
+        <Router>
+            <div className="min-h-screen bg-gray-100">
+                <Header />
+                <button 
+                    onClick={toggleTheme}
+                    className="theme-toggle"
+                    aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+                >
+                    {theme === 'dark' ? '☀️' : '🌙'}
+                </button>
+                <AnimatePresence mode="wait">
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/about" element={<About />} />
+                        <Route path="/projects" element={<Projects />} />
+                        <Route path="/resume" element={<Resume />} />
+                        <Route path="/contact" element={<Contact />} />
+                    </Routes>
+                </AnimatePresence>
+            </div>
+        </Router>
+    );
+};
 
 export default App;
