@@ -147,24 +147,24 @@ const Resume = () => {
     return (
         <PageTransition>
             <div className="container mx-auto px-4 py-16">
-                <h2 className="text-3xl font-bold mb-8 text-blue-600">Resume</h2>
-                <div className={`bg-white shadow-lg rounded-lg p-6 ${isFullScreen ? 'fixed inset-0 z-50' : ''}`}>
+                <h2 className="text-3xl font-bold mb-8 text-primary">Resume</h2>
+                <div className={`bg-secondary-bg shadow-lg rounded-lg p-6 border border-border-color ${isFullScreen ? 'fixed inset-0 z-50' : ''}`}>
                     <div className="flex justify-between items-center mb-4">
-                        <p className="text-lg text-gray-700">
+                        <p className="text-lg">
                             Preview my resume below or download the full PDF.
                         </p>
                         <div className="flex space-x-2">
                             <a
                                 href="/resume.pdf"
                                 download
-                                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center"
+                                className="bg-primary text-white px-4 py-2 rounded-lg hover:opacity-80 transition-colors duration-200 flex items-center"
                             >
                                 <FaDownload className="mr-2" />
                                 Download PDF
                             </a>
                             <button
                                 onClick={toggleFullScreen}
-                                className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors duration-200 flex items-center"
+                                className="bg-secondary-bg text-text px-4 py-2 rounded-lg border border-border-color hover:opacity-80 transition-colors duration-200 flex items-center"
                             >
                                 {isFullScreen ? <FaCompress className="mr-2" /> : <FaExpand className="mr-2" />}
                                 {isFullScreen ? 'Exit Fullscreen' : 'Fullscreen'}
@@ -180,7 +180,7 @@ const Resume = () => {
                         <iframe
                             src="/resume.pdf"
                             title="Andrew Van Ostrand Resume"
-                            className="w-full h-full border-2 border-gray-300 rounded-lg"
+                            className="w-full h-full border-2 border-border-color rounded-lg"
                         />
                     </motion.div>
                 </div>
