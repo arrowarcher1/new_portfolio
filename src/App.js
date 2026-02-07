@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform, useInView } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaTimes, FaExternalLinkAlt, FaPhone, FaMapMarkerAlt, FaArrowDown, FaSun, FaMoon } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaTimes, FaExternalLinkAlt, FaPhone, FaMapMarkerAlt, FaArrowDown } from 'react-icons/fa';
 import { SiLeetcode } from 'react-icons/si';
 
 // ═══════════════════════════════════════
