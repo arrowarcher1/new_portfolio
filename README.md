@@ -1,0 +1,1 @@
+My Current Portfolio, used to showcase all my projects and a little more about me. I try and update this with large model updates as a benchmark of different models progress in frontend design + development.
