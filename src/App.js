@@ -121,7 +121,7 @@ const EXPERIENCES = [
     company: 'Oracle',
     location: 'Bethlehem, PA',
     period: 'Jan 2026 — Present',
-    tech: ['Go', 'Solidity', 'TypeScript', 'Node.js', 'React', 'Docker', 'Kubernetes'],
+    tech: ['Go', 'Solidity', 'TypeScript', 'Docker', 'Kubernetes'],
     bullets: [
       'Implementing authorization capabilities chaincode in Go for Oracle Blockchain Platform, handling spec research, system design, and building core operations for credential delegation and verification',
       'Building and deploying chaincode features including query functions, standardized response handling, and input validation, iterating through code reviews',
