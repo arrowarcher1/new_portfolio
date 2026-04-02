@@ -123,9 +123,9 @@ const EXPERIENCES = [
     period: 'Jan 2026 — Present',
     tech: ['Go', 'Solidity', 'TypeScript', 'Node.js', 'React', 'Docker', 'Kubernetes'],
     bullets: [
-      'Building enterprise decentralized identity solution for Oracle Blockchain Platform with policy-based access control on permissioned Ethereum networks',
-      'Integrating Solidity smart contracts with TypeScript/Node.js APIs and React frontend for secure credential issuance & verification',
-      'Engineering modular registry architecture (DID, credentials, revocation, trust) using cryptographic primitives',
+      'Implementing authorization capabilities chaincode in Go for Oracle Blockchain Platform, handling spec research, system design, and building core operations for credential delegation and verification',
+      'Building and deploying chaincode features including query functions, standardized response handling, and input validation, iterating through code reviews',
+      'Developing reusable cryptographic encoding package with comprehensive tests, and porting chaincode functionality to Solidity smart contracts for EVM-compatible deployment',
     ],
     color: '#f59e0b',
   },
