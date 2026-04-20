@@ -9,6 +9,28 @@ import { SiLeetcode } from 'react-icons/si';
 
 const PROJECTS = [
   {
+    title: "Converge",
+    shortDesc: "Live AI negotiation demo — two agents, hidden reservations, on-chain settlement",
+    fullDesc: "Real-time negotiation prototype where two Anthropic-powered agents exchange offers with private reservation prices. Streams both agent reasoning and public transcripts via SSE, detects deal/walk-away/deadlock terminal states, and computes the Zone of Possible Agreement with surplus analysis. Optional blockchain settlement on Base Sepolia with demo fallback.",
+    tech: ["TypeScript", "Node.js", "Hono", "Anthropic Agent SDK", "Viem", "SSE", "Zod"],
+    achievements: [
+      "Real-time SSE streaming of both private agent thoughts and public transcripts",
+      "Deterministic orchestrator with stagnation detection and 16-turn hard limit",
+      "ZOPA/surplus visualization computed at conclusion",
+      "Optional on-chain settlement on Base Sepolia with demo fallback",
+      "Audience-friendly live demos — QR-code seeding of reservation values",
+    ],
+    link: "https://github.com/arrowarcher1/Converge",
+    image: "/images/converge-convo.png",
+    gallery: [
+      "/images/converge.gif",
+      "/images/converge-convo.png",
+      "/images/converge-seed.png",
+      "/images/converge-walkaway.png",
+    ],
+    color: "#ec4899",
+  },
+  {
     title: "Truth Trail",
     shortDesc: "Blockchain-based forensic evidence management",
     fullDesc: "Engineered blockchain-based evidence management system providing immutable audit trails for forensic investigations, solving chain-of-custody vulnerabilities in traditional evidence tracking.",
@@ -911,7 +933,11 @@ const ProjectCard = ({ project, index, isDark, onSelect }) => {
 };
 
 // --- Project Modal ---
-const ProjectModal = ({ project, isDark, onClose }) => (
+const ProjectModal = ({ project, isDark, onClose }) => {
+  const gallery = project.gallery && project.gallery.length > 0 ? project.gallery : [project.image];
+  const [activeImage, setActiveImage] = useState(gallery[0]);
+
+  return (
   <motion.div
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
@@ -945,12 +971,19 @@ const ProjectModal = ({ project, isDark, onClose }) => (
 
       {/* Image header */}
       <div className="relative h-56 md:h-64 overflow-hidden">
-        <img
-          src={project.image}
-          alt={project.title}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={activeImage}
+            src={activeImage}
+            alt={project.title}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        </AnimatePresence>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
         <div className="absolute bottom-0 left-0 p-6">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-3 h-3 rounded-full glow-dot" style={{ background: project.color }} />
@@ -959,6 +992,37 @@ const ProjectModal = ({ project, isDark, onClose }) => (
           <h2 className="text-3xl font-display font-bold text-white">{project.title}</h2>
         </div>
       </div>
+
+      {/* Gallery thumbnail strip */}
+      {gallery.length > 1 && (
+        <div className={`flex gap-2 px-6 md:px-8 pt-4 overflow-x-auto ${
+          isDark ? 'border-glow/5' : 'border-glow/10'
+        }`}>
+          {gallery.map((src) => {
+            const isActive = src === activeImage;
+            return (
+              <button
+                key={src}
+                onClick={() => setActiveImage(src)}
+                className={`relative flex-shrink-0 w-20 h-14 rounded-md overflow-hidden border-2 transition-all duration-200 ${
+                  isActive
+                    ? 'border-glow shadow-[0_0_12px_rgba(16,185,129,0.3)]'
+                    : isDark
+                      ? 'border-glow/10 opacity-60 hover:opacity-100 hover:border-glow/30'
+                      : 'border-glow/15 opacity-70 hover:opacity-100 hover:border-glow/40'
+                }`}
+                aria-label={`View image ${gallery.indexOf(src) + 1}`}
+              >
+                <img
+                  src={src}
+                  alt=""
+                  className="w-full h-full object-cover"
+                />
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       {/* Body */}
       <div className="p-6 md:p-8 space-y-6">
@@ -1010,7 +1074,8 @@ const ProjectModal = ({ project, isDark, onClose }) => (
       </div>
     </motion.div>
   </motion.div>
-);
+  );
+};
 
 // --- Projects Section ---
 const Projects = ({ isDark }) => {
