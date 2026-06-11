@@ -13,8 +13,9 @@ export default function CameraRig({ reducedMotion }) {
   const pos = useRef(new THREE.Vector3())
   const look = useRef(new THREE.Vector3())
   const lookCurrent = useRef(null)
+  const parallax = useRef(new THREE.Vector2())
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     scrollBus.el = scroll.el
     scrollBus.offset = scroll.offset
 
@@ -29,14 +30,16 @@ export default function CameraRig({ reducedMotion }) {
     if (!lookCurrent.current) {
       lookCurrent.current = look.current.clone()
     }
-    lookCurrent.current.lerp(look.current, 0.12)
+    lookCurrent.current.lerp(look.current, 1 - Math.exp(-7 * delta))
 
-    // Gentle mouse parallax
+    // Mouse parallax, damped so raw pointer steps never reach the camera
     const px = reducedMotion ? 0 : state.pointer.x
     const py = reducedMotion ? 0 : state.pointer.y
+    parallax.current.x = THREE.MathUtils.damp(parallax.current.x, px, 2.5, delta)
+    parallax.current.y = THREE.MathUtils.damp(parallax.current.y, py, 2.5, delta)
     camera.position.set(
-      pos.current.x + px * 0.45,
-      pos.current.y + py * 0.25,
+      pos.current.x + parallax.current.x * 0.45,
+      pos.current.y + parallax.current.y * 0.25,
       pos.current.z,
     )
     camera.lookAt(lookCurrent.current)

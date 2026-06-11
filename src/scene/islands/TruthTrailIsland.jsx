@@ -48,7 +48,7 @@ export default function TruthTrailIsland({ position, color = '#34d399' }) {
           roughness={0.4}
           metalness={0.5}
         />
-        <Edges color={color} threshold={15} />
+        <Edges color={color} threshold={15} scale={1.04} />
       </mesh>
       {/* Padlock sealing the vault: body + shackle */}
       <group position={[0, 0.72, 0.31]}>
@@ -94,7 +94,7 @@ export default function TruthTrailIsland({ position, color = '#34d399' }) {
             roughness={0.3}
             metalness={0.6}
           />
-          <Edges color={color} threshold={15} />
+          <Edges color={color} threshold={15} scale={1.04} />
         </mesh>
       ))}
     </IslandBase>

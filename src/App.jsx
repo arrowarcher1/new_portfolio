@@ -39,8 +39,8 @@ export default function App() {
 
       <Canvas
         dpr={quality === 'low' ? [1, 1.5] : [1, 2]}
-        camera={{ fov: 50, near: 0.1, far: 250, position: [0, 0.8, 6] }}
-        gl={{ antialias: false, powerPreference: 'high-performance' }}
+        camera={{ fov: 50, near: 0.5, far: 250, position: [0, 0.8, 6] }}
+        gl={{ antialias: true, powerPreference: 'high-performance' }}
       >
         <Suspense fallback={null}>
           <ScrollControls pages={PAGES} damping={0.22}>
@@ -62,7 +62,7 @@ export default function App() {
             </EffectComposer>
           )}
 
-          <AdaptiveDpr pixelated />
+          <AdaptiveDpr />
           <Preload all />
         </Suspense>
       </Canvas>

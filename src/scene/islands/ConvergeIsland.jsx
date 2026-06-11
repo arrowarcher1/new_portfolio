@@ -97,9 +97,9 @@ export default function ConvergeIsland({ position, color = '#ec4899' }) {
         <cylinderGeometry args={[0.55, 0.42, 0.1, 6]} />
         <meshStandardMaterial color="#2d1657" flatShading roughness={0.35} metalness={0.5} />
       </mesh>
-      <mesh position={[0, 0.34, 0]}>
+      <mesh position={[0, 0.358, 0]}>
         <cylinderGeometry args={[0.5, 0.5, 0.015, 6]} />
-        <meshBasicMaterial color={color} transparent opacity={0.25} />
+        <meshBasicMaterial color={color} transparent opacity={0.25} depthWrite={false} />
       </mesh>
       <mesh position={[0, 0.12, 0]}>
         <cylinderGeometry args={[0.1, 0.16, 0.28, 6]} />

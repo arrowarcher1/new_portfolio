@@ -80,10 +80,17 @@ export default function IslandBase({
           <cylinderGeometry args={[2.3, 2.42, 0.34, 6]} />
           <meshStandardMaterial color="#1f8f6f" flatShading roughness={0.7} />
         </mesh>
-        {/* Turf rim glow */}
-        <mesh position={[0, -0.26, 0]}>
-          <cylinderGeometry args={[2.44, 2.44, 0.04, 6]} />
-          <meshBasicMaterial color={color} transparent opacity={0.5} />
+        {/* Turf rim glow — pulled clear of the soil layer and depth-decoupled
+            so it can't z-fight the strata faces */}
+        <mesh position={[0, -0.245, 0]}>
+          <cylinderGeometry args={[2.47, 2.47, 0.04, 6, 1, true]} />
+          <meshBasicMaterial
+            color={color}
+            transparent
+            opacity={0.5}
+            depthWrite={false}
+            side={THREE.DoubleSide}
+          />
         </mesh>
 
         {/* Rim crystals in the island's accent color */}
@@ -130,8 +137,9 @@ export default function IslandBase({
         ))}
       </Float>
 
-      {/* Glow pool beneath */}
-      <mesh position={[0, -3.4, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+      {/* Glow pool beneath — kept below the bobbing keel tip so the two
+          never intersect mid-float */}
+      <mesh position={[0, -3.85, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <circleGeometry args={[2.6, 32]} />
         <meshBasicMaterial
           color={color}
