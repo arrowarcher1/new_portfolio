@@ -3,260 +3,187 @@
 @tailwind utilities;
 
 /* ═══════════════════════════════════════
-   MIDNIGHT ARCHITECT — Global Styles
+   AURORA DREAM VOID — Global Styles
    ═══════════════════════════════════════ */
 
+:root {
+  --void: #050210;
+  --fuchsia: #d946ef;
+  --violet: #8b5cf6;
+  --cyan: #22d3ee;
+  --mint: #34d399;
+  --ink: #e9e1fc;
+}
+
 @layer base {
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: #10b981 transparent;
-  }
-
-  *::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  *::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  *::-webkit-scrollbar-thumb {
-    background: #10b98140;
-    border-radius: 3px;
-  }
-
-  *::-webkit-scrollbar-thumb:hover {
-    background: #10b98180;
-  }
-
-  html {
-    scroll-behavior: smooth;
-    overflow-x: hidden;
-  }
-
-  body {
+  html,
+  body,
+  #root {
+    height: 100%;
     margin: 0;
-    background-color: #0a0a0f;
-    color: #e2ddd2;
-    font-family: 'Outfit', sans-serif;
-    transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-                color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow-x: hidden;
-  }
-
-  /* Light mode */
-  body.light {
-    background-color: #faf8f4;
-    color: #1e1f2e;
+    overflow: hidden;
+    background: var(--void);
+    color: var(--ink);
+    font-family: 'Sora', sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
 
   ::selection {
-    background: #10b98140;
+    background: #d946ef55;
     color: #fff;
   }
 
-  body.light ::selection {
-    background: #10b98160;
-    color: #04040a;
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #8b5cf6 transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: #8b5cf655;
+    border-radius: 3px;
   }
 }
 
-/* ═══════════════════════════════════════
-   Grid Background Pattern
-   ═══════════════════════════════════════ */
-.grid-bg {
-  background-image:
-    linear-gradient(rgba(16, 185, 129, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  animation: grid-fade 3s ease-in-out infinite;
+@layer components {
+  /* Glassmorphic panel — the core surface of the overlay */
+  .glass-panel {
+    background: linear-gradient(160deg, rgba(29, 15, 58, 0.72), rgba(10, 5, 24, 0.82));
+    border: 1px solid rgba(217, 70, 239, 0.22);
+    box-shadow:
+      0 0 60px rgba(139, 92, 246, 0.12),
+      inset 0 1px 0 rgba(245, 241, 255, 0.08);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: 1.25rem;
+  }
+
+  .glass-chip {
+    background: rgba(34, 211, 238, 0.08);
+    border: 1px solid rgba(34, 211, 238, 0.35);
+    color: #a5f3fc;
+    border-radius: 9999px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.65rem;
+    white-space: nowrap;
+  }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #a795d4;
+  }
+
+  .aurora-text {
+    background: linear-gradient(100deg, #f0abfc 0%, #c4b5fd 40%, #67e8f9 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .ghost-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    color: #f0abfc;
+    border: 1px solid rgba(217, 70, 239, 0.45);
+    border-radius: 9999px;
+    padding: 0.55rem 1.3rem;
+    transition: all 0.3s ease;
+    background: rgba(217, 70, 239, 0.07);
+  }
+  .ghost-button:hover {
+    background: rgba(217, 70, 239, 0.18);
+    box-shadow: 0 0 24px rgba(217, 70, 239, 0.35);
+    transform: translateY(-1px);
+  }
 }
 
-body.light .grid-bg {
-  background-image:
-    linear-gradient(rgba(16, 185, 129, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(16, 185, 129, 0.06) 1px, transparent 1px);
+/* Hero entrance — CSS so it survives drei's Scroll-html portal re-parenting */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
-
-/* ═══════════════════════════════════════
-   Glow Effects
-   ═══════════════════════════════════════ */
-.glow-text {
-  text-shadow: 0 0 40px rgba(16, 185, 129, 0.3),
-               0 0 80px rgba(16, 185, 129, 0.1);
-}
-
-body.light .glow-text {
-  text-shadow: none;
-}
-
-.glow-border {
-  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.15),
-              0 0 30px rgba(16, 185, 129, 0.05),
-              inset 0 0 30px rgba(16, 185, 129, 0.02);
-}
-
-body.light .glow-border {
-  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.2),
-              0 4px 20px rgba(0, 0, 0, 0.06);
-}
-
-.glow-dot {
-  box-shadow: 0 0 8px rgba(16, 185, 129, 0.6),
-              0 0 20px rgba(16, 185, 129, 0.3);
-}
-
-/* ═══════════════════════════════════════
-   Noise Texture Overlay
-   ═══════════════════════════════════════ */
-.noise::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.015;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 256px 256px;
-}
-
-body.light .noise::before {
-  opacity: 0.03;
-}
-
-/* ═══════════════════════════════════════
-   Scan Line Effect
-   ═══════════════════════════════════════ */
-.scanline::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.08), transparent);
-  animation: scan 8s linear infinite;
-  pointer-events: none;
-  z-index: 9998;
-}
-
-body.light .scanline::after {
-  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.04), transparent);
-}
-
-/* ═══════════════════════════════════════
-   3D Card Tilt Shine
-   ═══════════════════════════════════════ */
-.tilt-card {
-  transform-style: preserve-3d;
-  perspective: 1000px;
-}
-
-.tilt-shine {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
+.rise {
   opacity: 0;
-  transition: opacity 0.3s;
-  background: radial-gradient(
-    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(16, 185, 129, 0.06),
-    transparent 40%
-  );
+  animation: rise 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
+.rise-1 { animation-delay: 1.6s; }
+.rise-2 { animation-delay: 1.9s; }
+.rise-3 { animation-delay: 2.3s; }
+.rise-4 { animation-delay: 2.5s; }
+.rise-5 { animation-delay: 2.9s; }
 
-.tilt-card:hover .tilt-shine {
-  opacity: 1;
-}
-
-/* ═══════════════════════════════════════
-   Terminal Cursor
-   ═══════════════════════════════════════ */
-.terminal-cursor {
-  display: inline-block;
-  width: 10px;
-  height: 1.2em;
-  background: #10b981;
-  margin-left: 2px;
-  vertical-align: text-bottom;
-  animation: blink 1s step-end infinite;
-}
-
-/* ═══════════════════════════════════════
-   Skill Ring Animation
-   ═══════════════════════════════════════ */
-@keyframes orbit {
-  from { transform: rotate(0deg) translateX(var(--orbit-radius)) rotate(0deg); }
-  to { transform: rotate(360deg) translateX(var(--orbit-radius)) rotate(-360deg); }
-}
-
-.orbit-item {
-  animation: orbit var(--orbit-duration, 20s) linear infinite;
-}
-
-/* ═══════════════════════════════════════
-   Section Divider
-   ═══════════════════════════════════════ */
-.section-line {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.3), transparent);
-}
-
-body.light .section-line {
-  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.2), transparent);
-}
-
-/* ═══════════════════════════════════════
-   Project Card Image Gradient
-   ═══════════════════════════════════════ */
-.project-gradient {
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(4, 4, 10, 0.4) 50%,
-    rgba(4, 4, 10, 0.95) 100%
-  );
-}
-
-body.light .project-gradient {
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(250, 248, 244, 0.4) 50%,
-    rgba(250, 248, 244, 0.95) 100%
-  );
-}
-
-/* ═══════════════════════════════════════
-   Custom Focus Styles
-   ═══════════════════════════════════════ */
-a:focus-visible,
-button:focus-visible {
-  outline: 2px solid #10b981;
-  outline-offset: 2px;
-  border-radius: 4px;
-}
-
-/* ═══════════════════════════════════════
-   Smooth Section Snapping (optional feel)
-   ═══════════════════════════════════════ */
-@media (min-width: 768px) {
-  .hero-height {
-    min-height: 100vh;
+/* Scroll hint chevron drift */
+@keyframes drift-down {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 0.4;
   }
 }
-
-/* Resume iframe */
-.resume-frame {
-  border: 1px solid rgba(16, 185, 129, 0.15);
-  border-radius: 8px;
+.scroll-hint {
+  animation: drift-down 2.2s ease-in-out infinite;
 }
 
-body.light .resume-frame {
-  border-color: rgba(16, 185, 129, 0.2);
+/* Loader pulse */
+@keyframes loader-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 1;
+  }
+}
+.loader-orb {
+  animation: loader-breathe 1.6s ease-in-out infinite;
+}
+
+/* Grain overlay for atmosphere over the canvas */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  opacity: 0.05;
+  z-index: 50;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-hint,
+  .loader-orb {
+    animation: none;
+  }
+  .rise {
+    animation-duration: 0.01s;
+    animation-delay: 0s;
+  }
 }

@@ -1,66 +1,36 @@
-module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
-  darkMode: 'class',
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
     extend: {
       fontFamily: {
-        'display': ['Outfit', 'sans-serif'],
-        'mono': ['JetBrains Mono', 'monospace'],
+        display: ['Unbounded', 'sans-serif'],
+        body: ['Sora', 'sans-serif'],
+        mono: ['"IBM Plex Mono"', 'monospace'],
       },
       colors: {
         void: {
-          950: '#04040a',
-          900: '#0a0a0f',
-          800: '#0f1019',
-          700: '#161722',
-          600: '#1e1f2e',
-          500: '#2a2b3d',
+          950: '#050210',
+          900: '#0a0518',
+          800: '#120826',
+          700: '#1d0f3a',
+          600: '#2d1657',
         },
-        glow: {
-          DEFAULT: '#10b981',
-          dim: '#059669',
-          bright: '#34d399',
-          cyan: '#06b6d4',
-          amber: '#f59e0b',
+        aurora: {
+          fuchsia: '#d946ef',
+          violet: '#8b5cf6',
+          cyan: '#22d3ee',
+          mint: '#34d399',
+          amber: '#fbbf24',
+          rose: '#fb7185',
         },
-        cream: {
-          50: '#fefdfb',
-          100: '#faf8f4',
-          200: '#f0ede5',
-          300: '#e2ddd2',
-          400: '#c4bfb3',
-          500: '#9c9789',
-        },
-      },
-      animation: {
-        'float': 'float 6s ease-in-out infinite',
-        'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
-        'grid-fade': 'grid-fade 3s ease-in-out infinite',
-        'scan': 'scan 8s linear infinite',
-        'blink': 'blink 1s step-end infinite',
-      },
-      keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-20px)' },
-        },
-        'glow-pulse': {
-          '0%, 100%': { opacity: 0.4 },
-          '50%': { opacity: 1 },
-        },
-        'grid-fade': {
-          '0%, 100%': { opacity: 0.03 },
-          '50%': { opacity: 0.08 },
-        },
-        scan: {
-          '0%': { transform: 'translateY(-100%)' },
-          '100%': { transform: 'translateY(100vh)' },
-        },
-        blink: {
-          '0%, 100%': { opacity: 1 },
-          '50%': { opacity: 0 },
+        mist: {
+          50: '#f5f1ff',
+          100: '#e9e1fc',
+          200: '#cfc2ef',
+          300: '#a795d4',
+          400: '#7c6aa8',
+          500: '#544a78',
         },
       },
     },
