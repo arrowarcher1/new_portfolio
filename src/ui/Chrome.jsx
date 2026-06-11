@@ -17,13 +17,14 @@ export function IntroVeil() {
     <AnimatePresence>
       {!gone && (
         <motion.div
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-void-950"
+          className="fixed inset-0 z-[60] flex items-center justify-center"
+          style={{ background: 'linear-gradient(180deg, #86a8d8 0%, #ffd9c0 100%)' }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.9, ease: 'easeInOut' }}
         >
           <div className="flex flex-col items-center gap-6">
-            <div className="loader-orb h-3 w-3 rounded-full bg-aurora-fuchsia shadow-[0_0_30px_#d946ef]" />
-            <p className="font-mono text-[0.65rem] tracking-[0.4em] text-mist-300 uppercase">
+            <div className="loader-orb h-3 w-3 rounded-full bg-[#ff9a4d] shadow-[0_0_30px_#ffb36b]" />
+            <p className="font-mono text-[0.65rem] tracking-[0.4em] text-[#3b2f63] uppercase">
               andrew van ostrand
             </p>
           </div>
@@ -35,7 +36,7 @@ export function IntroVeil() {
 
 export function Wordmark() {
   return (
-    <div className="fixed top-5 left-6 z-40 flex items-center gap-4">
+    <div className="fixed top-5 left-6 z-40 flex items-center gap-4 chrome-shadow">
       <button
         onClick={() => jumpToStop(0, PAGES)}
         className="font-display font-semibold text-sm tracking-widest text-mist-100 hover:text-aurora-fuchsia transition-colors"
@@ -48,7 +49,7 @@ export function Wordmark() {
 
 export function TopRight() {
   return (
-    <div className="fixed top-5 right-6 z-40 flex items-center gap-4 text-mist-300">
+    <div className="fixed top-5 right-6 z-40 flex items-center gap-4 text-mist-100 chrome-shadow">
       <a
         href={LINKS.github}
         target="_blank"
@@ -99,7 +100,7 @@ export function JourneyRail() {
       {/* Stop rail */}
       <nav
         aria-label="Journey stops"
-        className="fixed right-5 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col gap-3"
+        className="fixed right-5 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col gap-3 chrome-shadow"
       >
         {STOPS.map((stop, i) => (
           <button

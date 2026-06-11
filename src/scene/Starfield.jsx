@@ -1,8 +1,11 @@
 import { useMemo, useRef } from 'react'
 import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
+import { useScroll } from '@react-three/drei'
+import { starAlpha } from './timeOfDay'
 
-// Twinkling points scattered in a tube around the journey path.
+// Twinkling points scattered around the journey path. Invisible by day,
+// fading in through dusk to full brightness for the night finale.
 
 const vertexShader = /* glsl */ `
   attribute float aPhase;
@@ -19,19 +22,22 @@ const vertexShader = /* glsl */ `
 
 const fragmentShader = /* glsl */ `
   uniform vec3 uColor;
+  uniform float uOpacity;
   varying float vTwinkle;
   void main() {
     float d = length(gl_PointCoord - 0.5);
-    float alpha = smoothstep(0.5, 0.05, d) * vTwinkle;
+    float alpha = smoothstep(0.5, 0.05, d) * vTwinkle * uOpacity;
     gl_FragColor = vec4(uColor, alpha);
   }
 `
 
 export default function Starfield({ count = 900 }) {
+  const scroll = useScroll()
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
-      uColor: { value: new THREE.Color('#cfc2ef') },
+      uOpacity: { value: 0 },
+      uColor: { value: new THREE.Color('#e9ecff') },
     }),
     [],
   )
@@ -56,6 +62,7 @@ export default function Starfield({ count = 900 }) {
   const points = useRef()
   useFrame((state) => {
     uniforms.uTime.value = state.clock.elapsedTime
+    uniforms.uOpacity.value = starAlpha(scroll.offset)
   })
 
   return (

@@ -1,5 +1,7 @@
 import { Sparkles } from '@react-three/drei'
-import VoidBackground from './VoidBackground'
+import SkyDome from './SkyDome'
+import DayCycle from './DayCycle'
+import CloudField from './CloudField'
 import Starfield from './Starfield'
 import CameraRig from './CameraRig'
 import ConvergeIsland from './islands/ConvergeIsland'
@@ -23,21 +25,23 @@ export default function SceneWorld({ reducedMotion, quality }) {
     <>
       <CameraRig reducedMotion={reducedMotion} />
 
-      <fog attach="fog" args={['#0a0518', 18, 80]} />
-      <ambientLight color="#4c3a78" intensity={0.7} />
-      <directionalLight position={[8, 12, 6]} color="#cfc2ef" intensity={0.5} />
+      {/* Fog color is driven per-frame by DayCycle */}
+      <fog attach="fog" args={['#cfe6f4', 20, 95]} />
 
-      <VoidBackground />
+      <SkyDome />
+      <DayCycle />
+      <CloudField />
       <Starfield count={quality === 'low' ? 400 : 900} />
       {quality !== 'low' && (
+        // Fireflies around the night-time finale
         <Sparkles
-          count={220}
-          size={2.2}
-          speed={0.25}
-          opacity={0.5}
+          count={140}
+          size={2.4}
+          speed={0.3}
+          opacity={0.65}
           color="#f0abfc"
-          scale={[26, 14, 150]}
-          position={[0, 1, -60]}
+          scale={[22, 10, 28]}
+          position={[0, 1, -118]}
         />
       )}
 

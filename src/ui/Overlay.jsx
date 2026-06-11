@@ -40,7 +40,7 @@ function Section({ index, side = 'left', children, center = false }) {
       style={{ top: 0 }}
     >
       <div className="pointer-events-auto w-full md:w-auto flex justify-center">{children}</div>
-      <span className="absolute bottom-6 left-6 font-mono text-[0.6rem] tracking-[0.3em] text-mist-400/60 select-none">
+      <span className="absolute bottom-6 left-6 font-mono text-[0.6rem] tracking-[0.3em] text-white/60 scene-shadow select-none">
         {String(index + 1).padStart(2, '0')} / {String(STOPS.length).padStart(2, '0')}
       </span>
     </section>
@@ -51,19 +51,19 @@ function Hero() {
   return (
     <Section index={0} center>
       <div className="text-center max-w-4xl">
-        <p className="section-label mb-6 rise rise-1">software engineer</p>
-        <h1 className="font-display font-extrabold text-4xl md:text-7xl leading-tight aurora-text rise rise-2">
+        <p className="section-label !text-[#6d4f8f] mb-6 rise rise-1">software engineer</p>
+        <h1 className="font-display font-extrabold text-4xl md:text-7xl leading-tight sunrise-text rise rise-2">
           ANDREW
           <br />
           VAN OSTRAND
         </h1>
-        <p className="mt-6 font-body text-mist-200 text-base md:text-lg rise rise-3">
+        <p className="mt-6 font-body sky-ink text-base md:text-lg rise rise-3">
           I build AI agents, blockchain systems, and the infrastructure behind them
         </p>
-        <p className="mt-2 font-mono text-xs text-mist-400 tracking-widest rise rise-4">
+        <p className="mt-2 font-mono text-xs text-[#5b4480] tracking-widest rise rise-4">
           CS &amp; Business @ Lehigh · Capstone SWE @ Oracle
         </p>
-        <div className="mt-14 flex flex-col items-center gap-2 text-mist-300 rise rise-5">
+        <div className="mt-14 flex flex-col items-center gap-2 sky-ink rise rise-5">
           <span className="font-mono text-[0.65rem] tracking-[0.35em] uppercase">
             scroll to explore
           </span>
@@ -203,8 +203,8 @@ function ArchipelagoSection() {
   return (
     <Section index={6} side="right">
       <motion.div {...fadeUp} className="max-w-md w-full">
-        <p className="section-label mb-4">06 — More Work</p>
-        <h2 className="font-display font-semibold text-2xl text-mist-50 mb-5">
+        <p className="section-label scene-shadow mb-4">06 — More Work</p>
+        <h2 className="font-display font-semibold text-2xl text-mist-50 scene-shadow mb-5">
           More projects
         </h2>
         <div className="space-y-3">

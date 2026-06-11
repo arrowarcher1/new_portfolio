@@ -46,15 +46,15 @@ export function AboutBlob({ position }) {
     <group position={position}>
       <Float speed={1.2} rotationIntensity={0.4} floatIntensity={0.8}>
         <mesh>
-          <icosahedronGeometry args={[1.5, 24]} />
+          <icosahedronGeometry args={[1.25, 24]} />
           <MeshDistortMaterial
-            color="#2d1657"
+            color="#b5a4f5"
             emissive="#8b5cf6"
-            emissiveIntensity={0.35}
-            distort={0.45}
-            speed={1.6}
-            roughness={0.2}
-            metalness={0.6}
+            emissiveIntensity={0.12}
+            distort={0.35}
+            speed={1.4}
+            roughness={0.15}
+            metalness={0.55}
           />
         </mesh>
       </Float>
@@ -205,18 +205,18 @@ export function ContactPortal({ position }) {
     }
     if (inner.current) {
       inner.current.rotation.z = -t * 0.45
-      inner.current.material.emissiveIntensity = 1.4 + Math.sin(t * 2) * 0.5
+      inner.current.material.emissiveIntensity = 2.2 + Math.sin(t * 2) * 0.7
     }
   })
   return (
     <group position={position}>
       <mesh ref={ring}>
         <torusGeometry args={[1.7, 0.05, 12, 80]} />
-        <meshStandardMaterial color="#d946ef" emissive="#d946ef" emissiveIntensity={1.6} />
+        <meshStandardMaterial color="#d946ef" emissive="#d946ef" emissiveIntensity={2.6} />
       </mesh>
       <mesh ref={inner}>
         <torusGeometry args={[1.15, 0.022, 10, 70]} />
-        <meshStandardMaterial color="#22d3ee" emissive="#22d3ee" emissiveIntensity={1.4} />
+        <meshStandardMaterial color="#22d3ee" emissive="#22d3ee" emissiveIntensity={2.2} />
       </mesh>
       <mesh>
         <circleGeometry args={[1.1, 48]} />

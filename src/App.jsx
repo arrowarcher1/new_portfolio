@@ -53,12 +53,12 @@ export default function App() {
           {quality === 'high' && (
             <EffectComposer disableNormalPass>
               <Bloom
-                intensity={0.85}
-                luminanceThreshold={0.28}
-                luminanceSmoothing={0.7}
+                intensity={0.7}
+                luminanceThreshold={1}
+                luminanceSmoothing={0.4}
                 mipmapBlur
               />
-              <Vignette eskil={false} offset={0.25} darkness={0.75} />
+              <Vignette eskil={false} offset={0.2} darkness={0.45} />
             </EffectComposer>
           )}
 
