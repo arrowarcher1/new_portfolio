@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
-import { Float, Line, MeshDistortMaterial } from '@react-three/drei'
+import { Float, Line } from '@react-three/drei'
 import { EXPERIENCES } from '../data/content'
 
 // Non-island set pieces along the journey: hero shards, the about blob,
@@ -37,34 +37,6 @@ export function HeroShards({ position }) {
           </mesh>
         </Float>
       ))}
-    </group>
-  )
-}
-
-export function AboutBlob({ position }) {
-  return (
-    <group position={position}>
-      <Float speed={1.2} rotationIntensity={0.4} floatIntensity={0.8}>
-        <mesh>
-          <icosahedronGeometry args={[1.25, 24]} />
-          <MeshDistortMaterial
-            color="#b5a4f5"
-            emissive="#8b5cf6"
-            emissiveIntensity={0.12}
-            distort={0.35}
-            speed={1.4}
-            roughness={0.15}
-            metalness={0.55}
-          />
-        </mesh>
-      </Float>
-      <Float speed={2.2} floatIntensity={1.5}>
-        <mesh position={[2.2, 1, 0.5]}>
-          <torusGeometry args={[0.45, 0.04, 8, 40]} />
-          <meshStandardMaterial color="#22d3ee" emissive="#22d3ee" emissiveIntensity={1.2} />
-        </mesh>
-      </Float>
-      <pointLight position={[0, 1, 2]} color="#8b5cf6" intensity={20} distance={10} />
     </group>
   )
 }

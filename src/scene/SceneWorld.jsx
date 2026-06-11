@@ -8,9 +8,10 @@ import ConvergeIsland from './islands/ConvergeIsland'
 import TruthTrailIsland from './islands/TruthTrailIsland'
 import ProfPairIsland from './islands/ProfPairIsland'
 import Archipelago from './islands/Archipelago'
+import AboutIsland from './islands/AboutIsland'
+import Flock from './Flock'
 import {
   HeroShards,
-  AboutBlob,
   ExperienceConstellation,
   SkillsOrrery,
   ContactPortal,
@@ -46,8 +47,17 @@ export default function SceneWorld({ reducedMotion, quality }) {
       )}
 
       <HeroShards position={at('hero')} />
-      <AboutBlob position={at('about')} />
+      <AboutIsland position={at('about')} />
       <ExperienceConstellation position={at('experience')} />
+
+      {/* Birds over the daytime stretch of the journey */}
+      {quality !== 'low' && (
+        <>
+          <Flock center={[-3, 3.2, -22]} radius={9} count={5} speed={0.14} />
+          <Flock center={[3, 2.6, -56]} radius={10} count={4} speed={0.11} tone="#46336e" />
+          <Flock center={[-2, 3.5, -84]} radius={11} count={5} speed={0.13} />
+        </>
+      )}
 
       <ConvergeIsland position={at('converge')} color={FEATURED_PROJECTS[0].color} />
       <TruthTrailIsland position={at('truth-trail')} color={FEATURED_PROJECTS[1].color} />

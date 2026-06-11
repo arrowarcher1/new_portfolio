@@ -10,9 +10,13 @@ import IslandBase from './IslandBase'
 // who answers with a counter-offer. Deal terms shift on the tabletop.
 
 const AGENT_X = 1.35
-const LEG_SECONDS = 3.4
+const LEG_SECONDS = 3.0
+const ROUNDS = 5
+const DEAL_SECONDS = 3.4
+const PERIOD = LEG_SECONDS * ROUNDS + DEAL_SECONDS
 const PINK = '#ec4899'
 const CYAN = '#22d3ee'
+const GOLD = '#fbbf24'
 
 const ss = (x) => {
   const c = THREE.MathUtils.clamp(x, 0, 1)
@@ -115,6 +119,7 @@ function SpeechBubble({ x, color, groupRef, barRefs }) {
 export default function ConvergeIsland({ position, color = '#ec4899' }) {
   const packet = useRef()
   const zopaRing = useRef()
+  const dealBeam = useRef()
   const tableBars = useRef([])
   const bubbleA = useRef()
   const bubbleB = useRef()
@@ -125,45 +130,92 @@ export default function ConvergeIsland({ position, color = '#ec4899' }) {
 
   useFrame((state) => {
     const t = state.clock.elapsedTime
-    const leg = Math.floor(t / LEG_SECONDS)
-    const lt = (t % LEG_SECONDS) / LEG_SECONDS
-    const aSpeaking = leg % 2 === 0
+    const ct = t % PERIOD
+    const dealing = ct >= LEG_SECONDS * ROUNDS
 
-    // Bubble pops in fast, holds while "stating the offer", then drops
-    const pop = ss(lt / 0.12) * (1 - ss((lt - 0.55) / 0.12))
-    const speakerBubble = aSpeaking ? bubbleA.current : bubbleB.current
-    const listenerBubble = aSpeaking ? bubbleB.current : bubbleA.current
-    if (speakerBubble) speakerBubble.scale.setScalar(pop)
-    if (listenerBubble) listenerBubble.scale.setScalar(0)
+    if (!dealing) {
+      // ── Negotiation rounds: offers converge leg by leg ──
+      const leg = Math.floor(ct / LEG_SECONDS)
+      const lt = (ct % LEG_SECONDS) / LEG_SECONDS
+      const aSpeaking = leg % 2 === 0
+      const progress = leg / (ROUNDS - 1)
 
-    // Offers converge over time: pink concedes down, cyan concedes up
-    const speakerBars = aSpeaking ? barsA.current : barsB.current
-    speakerBars.forEach((bar, i) => {
-      if (!bar) return
-      bar.scale.y = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(leg * 1.7 + i * 2.1))
-    })
+      // Bubble pops in fast, holds while "stating the offer", then drops
+      const pop = ss(lt / 0.12) * (1 - ss((lt - 0.55) / 0.12))
+      const speakerBubble = aSpeaking ? bubbleA.current : bubbleB.current
+      const listenerBubble = aSpeaking ? bubbleB.current : bubbleA.current
+      if (speakerBubble) speakerBubble.scale.setScalar(pop)
+      if (listenerBubble) listenerBubble.scale.setScalar(0)
 
-    // Speaker pulses while its bubble is up
-    pulseA.current = aSpeaking ? pop : 0
-    pulseB.current = aSpeaking ? 0 : pop
+      // Pink opens high and concedes down; cyan opens low and comes up
+      const level = aSpeaking
+        ? THREE.MathUtils.lerp(1.05, 0.62, progress)
+        : THREE.MathUtils.lerp(0.28, 0.56, progress)
+      const speakerBars = aSpeaking ? barsA.current : barsB.current
+      speakerBars.forEach((bar, i) => {
+        if (!bar) return
+        bar.scale.y = THREE.MathUtils.clamp(level * (0.85 + 0.25 * Math.sin(leg * 1.7 + i * 2.1)), 0.2, 1.1)
+      })
 
-    // The offer packet flies from speaker to listener
-    if (packet.current) {
-      const pt = ss((lt - 0.6) / 0.32)
-      const from = aSpeaking ? -AGENT_X : AGENT_X
-      packet.current.visible = lt > 0.6 && lt < 0.95
-      packet.current.position.x = THREE.MathUtils.lerp(from, -from, pt)
-      packet.current.position.y = 1.05 + Math.sin(pt * Math.PI) * 0.5
-      packet.current.scale.setScalar(1 + Math.sin(t * 9) * 0.12)
-      packet.current.material.emissive.set(aSpeaking ? PINK : CYAN)
+      // Speaker pulses while its bubble is up
+      pulseA.current = aSpeaking ? pop : 0
+      pulseB.current = aSpeaking ? 0 : pop
+
+      // The offer packet flies from speaker to listener
+      if (packet.current) {
+        const pt = ss((lt - 0.6) / 0.32)
+        const from = aSpeaking ? -AGENT_X : AGENT_X
+        packet.current.visible = lt > 0.6 && lt < 0.95
+        packet.current.position.x = THREE.MathUtils.lerp(from, -from, pt)
+        packet.current.position.y = 1.05 + Math.sin(pt * Math.PI) * 0.5
+        packet.current.scale.setScalar(1 + Math.sin(t * 9) * 0.12)
+        packet.current.material.emissive.set(aSpeaking ? PINK : CYAN)
+      }
+
+      if (dealBeam.current) dealBeam.current.visible = false
+      if (zopaRing.current) {
+        zopaRing.current.rotation.z = t * 0.4
+        zopaRing.current.scale.setScalar(1)
+        zopaRing.current.material.emissive.set('#d946ef')
+        zopaRing.current.material.emissiveIntensity = 1.6
+      }
+    } else {
+      // ── Deal! Both agents agree: bubbles up together, gold handshake ──
+      const dt = (ct - LEG_SECONDS * ROUNDS) / DEAL_SECONDS
+      const pop = ss(dt / 0.12) * (1 - ss((dt - 0.78) / 0.14))
+      if (bubbleA.current) bubbleA.current.scale.setScalar(pop)
+      if (bubbleB.current) bubbleB.current.scale.setScalar(pop)
+      ;[barsA.current, barsB.current].forEach((bars) =>
+        bars.forEach((bar, i) => {
+          if (bar) bar.scale.y = 0.58 + 0.04 * Math.sin(i * 2.1)
+        }),
+      )
+      pulseA.current = pop
+      pulseB.current = pop
+      if (packet.current) packet.current.visible = false
+
+      if (dealBeam.current) {
+        dealBeam.current.visible = dt > 0.1 && dt < 0.92
+        const grow = ss((dt - 0.1) / 0.15)
+        dealBeam.current.scale.set(1, grow, 1)
+        dealBeam.current.material.opacity = 0.85 * (1 - ss((dt - 0.78) / 0.14))
+        dealBeam.current.material.emissiveIntensity = 2.2 + Math.sin(t * 10) * 0.5
+      }
+      if (zopaRing.current) {
+        zopaRing.current.rotation.z = t * 1.2
+        zopaRing.current.scale.setScalar(1 + 0.2 * Math.sin(dt * Math.PI))
+        zopaRing.current.material.emissive.set(GOLD)
+        zopaRing.current.material.emissiveIntensity = 2.4
+      }
     }
 
-    if (zopaRing.current) zopaRing.current.rotation.z = t * 0.4
-
     // Deal terms shifting as offers land
+    const leg = Math.floor(ct / LEG_SECONDS)
     tableBars.current.forEach((bar, i) => {
       if (!bar) return
-      const h = 0.16 + 0.14 * (0.5 + 0.5 * Math.sin(leg * 1.3 + i * 1.9))
+      const h = dealing
+        ? 0.24
+        : 0.16 + 0.14 * (0.5 + 0.5 * Math.sin(leg * 1.3 + i * 1.9))
       bar.scale.y = h / 0.2
       bar.position.y = 0.42 + h / 2
     })
@@ -227,6 +279,23 @@ export default function ConvergeIsland({ position, color = '#ec4899' }) {
       <mesh ref={packet} position={[0, 1.05, 0]} visible={false}>
         <icosahedronGeometry args={[0.11, 1]} />
         <meshStandardMaterial color="#fff7fb" emissive="#f0abfc" emissiveIntensity={3} />
+      </mesh>
+
+      {/* Gold handshake beam between the agents at deal time */}
+      <mesh
+        ref={dealBeam}
+        position={[0, 1.0, 0]}
+        rotation={[0, 0, Math.PI / 2]}
+        visible={false}
+      >
+        <cylinderGeometry args={[0.03, 0.03, AGENT_X * 2, 8]} />
+        <meshStandardMaterial
+          color={GOLD}
+          emissive={GOLD}
+          emissiveIntensity={2.2}
+          transparent
+          opacity={0.85}
+        />
       </mesh>
 
       {/* ZOPA ring hovering above the pavilion */}

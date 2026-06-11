@@ -1,7 +1,13 @@
 import { Suspense, useMemo } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { ScrollControls, Scroll, AdaptiveDpr, Preload } from '@react-three/drei'
-import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing'
+import {
+  EffectComposer,
+  Bloom,
+  Vignette,
+  HueSaturation,
+  BrightnessContrast,
+} from '@react-three/postprocessing'
 import SceneWorld from './scene/SceneWorld'
 import Overlay from './ui/Overlay'
 import StaticFallback from './ui/StaticFallback'
@@ -59,6 +65,8 @@ export default function App() {
                 luminanceSmoothing={0.4}
                 mipmapBlur
               />
+              <HueSaturation saturation={0.18} />
+              <BrightnessContrast contrast={0.07} />
               <Vignette eskil={false} offset={0.2} darkness={0.45} />
             </EffectComposer>
           )}
