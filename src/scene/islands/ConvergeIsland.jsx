@@ -105,23 +105,41 @@ export default function ConvergeIsland({ position, color = '#ec4899' }) {
         </mesh>
       ))}
 
-      <Character
-        model="robot"
-        position={[-1.25, 0, 0]}
-        rotation={[0, Math.PI / 2, 0]}
-        scale={0.42}
-        tint="#ec4899"
-        anim="Idle"
-      />
-      <Character
-        model="robot"
-        position={[1.25, 0, 0]}
-        rotation={[0, -Math.PI / 2, 0]}
-        scale={0.42}
-        tint="#22d3ee"
-        anim="Idle"
-        timeOffset={0.8}
-      />
+      {[
+        { x: -1.35, color: '#ec4899', offset: 0 },
+        { x: 1.35, color: '#22d3ee', offset: 0.8 },
+      ].map((agent) => (
+        <group key={agent.color}>
+          <Character
+            model="robot"
+            position={[agent.x, 0.05, 0]}
+            rotation={[0, (Math.PI / 2) * Math.sign(-agent.x), 0]}
+            scale={0.3}
+            hover
+            timeOffset={agent.offset}
+          />
+          {/* Team ring on the turf */}
+          <mesh position={[agent.x, 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+            <torusGeometry args={[0.42, 0.025, 8, 32]} />
+            <meshStandardMaterial
+              color={agent.color}
+              emissive={agent.color}
+              emissiveIntensity={1.8}
+            />
+          </mesh>
+          {/* Identity beacon above the head */}
+          <mesh position={[agent.x, 1.62, 0]}>
+            <octahedronGeometry args={[0.09, 0]} />
+            <meshStandardMaterial
+              color={agent.color}
+              emissive={agent.color}
+              emissiveIntensity={2.4}
+            />
+          </mesh>
+        </group>
+      ))}
+      {/* Table light under the pavilion */}
+      <pointLight position={[0, 1.1, 0]} color="#fff6ec" intensity={5} distance={3.5} />
       <HoloScreen position={[-1.05, 1.15, 0.55]} rotation={[0, 0.5, 0.06]} color="#ec4899" />
       <HoloScreen position={[1.05, 1.15, -0.55]} rotation={[0, Math.PI - 0.5, -0.06]} color="#22d3ee" />
 

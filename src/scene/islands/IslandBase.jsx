@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import * as THREE from 'three'
 import { Float } from '@react-three/drei'
-import { jitterGeometry, Shadows, PineTree, RoundTree } from '../props'
+import { jitterGeometry, Shadows, GLBProp } from '../props'
 
 // Floating low-poly island: vertex-sculpted rock keel and turf, layered
 // strata, trees, rim crystals, grass tufts, orbiting pebbles, and a
@@ -104,13 +104,26 @@ export default function IslandBase({
             <meshStandardMaterial color="#249e77" flatShading roughness={0.7} />
           </mesh>
 
-          {/* Trees on the back rim */}
+          {/* Trees on the back rim — CC0 GLB models */}
           {trees &&
             treeSpots.map((t, i) =>
               t.kind === 'pine' ? (
-                <PineTree key={`tr${i}`} position={t.pos} scale={t.s} seed={seed + i * 3} />
+                <GLBProp
+                  key={`tr${i}`}
+                  url="/models/pine.glb"
+                  height={1.55 * t.s}
+                  position={t.pos}
+                  rotation={[0, seed + i * 2.1, 0]}
+                />
               ) : (
-                <RoundTree key={`tr${i}`} position={t.pos} scale={t.s} seed={seed + i * 3} />
+                <GLBProp
+                  key={`tr${i}`}
+                  url="/models/trees.glb"
+                  node={`NormalTree_${1 + ((seed + i) % 5)}`}
+                  height={1.25 * t.s}
+                  position={t.pos}
+                  rotation={[0, seed * 2 + i, 0]}
+                />
               ),
             )}
 
