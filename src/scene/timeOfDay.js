@@ -22,7 +22,8 @@ const KEYS = [
 
 // Sample the palette at a scroll offset into a reusable target object.
 export function samplePalette(offset, out) {
-  const t = THREE.MathUtils.clamp(offset, 0, 1)
+  // NaN-proof: a poisoned offset would otherwise zero every light in the scene
+  const t = Number.isFinite(offset) ? THREE.MathUtils.clamp(offset, 0, 1) : 0
   let i = 0
   while (i < KEYS.length - 2 && KEYS[i + 1].t <= t) i++
   const a = KEYS[i]

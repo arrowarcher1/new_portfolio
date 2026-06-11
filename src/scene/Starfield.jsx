@@ -3,6 +3,7 @@ import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
 import { useScroll } from '@react-three/drei'
 import { starAlpha } from './timeOfDay'
+import { safeOffset } from '../lib/scrollBus'
 
 // Twinkling points scattered around the journey path. Invisible by day,
 // fading in through dusk to full brightness for the night finale.
@@ -62,7 +63,7 @@ export default function Starfield({ count = 900 }) {
   const points = useRef()
   useFrame((state) => {
     uniforms.uTime.value = state.clock.elapsedTime
-    uniforms.uOpacity.value = starAlpha(scroll.offset)
+    uniforms.uOpacity.value = starAlpha(safeOffset(scroll.offset))
   })
 
   return (

@@ -3,6 +3,7 @@ import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
 import { useScroll } from '@react-three/drei'
 import { samplePalette, makePaletteTarget, sunDirection } from './timeOfDay'
+import { safeOffset } from '../lib/scrollBus'
 
 // Inward-facing sphere painted with the time-of-day gradient and a sun
 // glow halo. Follows the camera; colors driven by scroll offset.
@@ -54,11 +55,12 @@ export default function SkyDome() {
   )
 
   useFrame((state) => {
-    samplePalette(scroll.offset, palette)
+    const offset = safeOffset(scroll.offset)
+    samplePalette(offset, palette)
     uniforms.uHorizon.value.copy(palette.horizon)
     uniforms.uZenith.value.copy(palette.zenith)
     uniforms.uSunColor.value.copy(palette.sun)
-    uniforms.uSunDir.value.copy(sunDirection(scroll.offset, sunDir))
+    uniforms.uSunDir.value.copy(sunDirection(offset, sunDir))
     if (mesh.current) {
       mesh.current.position.copy(state.camera.position)
     }

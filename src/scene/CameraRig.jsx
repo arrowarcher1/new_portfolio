@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useScroll } from '@react-three/drei'
 import { cameraCurve, lookTargets } from './anchors'
-import { scrollBus } from '../lib/scrollBus'
+import { scrollBus, safeOffset } from '../lib/scrollBus'
 
 const smoothstep = (t) => t * t * (3 - 2 * t)
 
@@ -19,7 +19,7 @@ export default function CameraRig({ reducedMotion }) {
     scrollBus.el = scroll.el
     scrollBus.offset = scroll.offset
 
-    const offset = THREE.MathUtils.clamp(scroll.offset, 0, 1)
+    const offset = safeOffset(scroll.offset)
     cameraCurve.getPointAt(offset, pos.current)
 
     // Blend look targets across the current segment

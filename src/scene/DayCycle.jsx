@@ -8,6 +8,7 @@ import {
   sunDirection,
   moonDirection,
 } from './timeOfDay'
+import { safeOffset } from '../lib/scrollBus'
 
 // The sun and moon discs, the lights they cast, and the fog color —
 // all driven by scroll offset. Celestial bodies follow the camera so
@@ -30,7 +31,7 @@ export default function DayCycle() {
   const lightTarget = useRef()
 
   useFrame((state) => {
-    const offset = scroll.offset
+    const offset = safeOffset(scroll.offset)
     samplePalette(offset, palette)
     sunDirection(offset, sunDir)
     moonDirection(offset, moonDir)
@@ -104,8 +105,8 @@ export default function DayCycle() {
         color="#fff3d6"
         castShadow
         shadow-mapSize={[2048, 2048]}
-        shadow-bias={-0.0002}
-        shadow-normalBias={0.04}
+        shadow-bias={-0.0001}
+        shadow-normalBias={0.06}
         shadow-camera-left={-16}
         shadow-camera-right={16}
         shadow-camera-top={16}
