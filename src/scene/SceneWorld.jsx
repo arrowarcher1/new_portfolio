@@ -52,7 +52,7 @@ export default function SceneWorld({ reducedMotion, quality }) {
       <Archipelago position={at('archipelago')} />
       <SkillsOrrery position={at('skills')} />
       <ContactPortal
-        position={[at('contact')[0], at('contact')[1] + 2.6, at('contact')[2] - 3]}
+        position={[at('contact')[0], at('contact')[1] + 3.9, at('contact')[2] - 5]}
       />
     </>
   )

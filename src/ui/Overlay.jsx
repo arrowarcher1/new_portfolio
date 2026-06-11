@@ -51,21 +51,21 @@ function Hero() {
   return (
     <Section index={0} center>
       <div className="text-center max-w-4xl">
-        <p className="section-label mb-6 rise rise-1">a journey through the work of</p>
+        <p className="section-label mb-6 rise rise-1">software engineer</p>
         <h1 className="font-display font-extrabold text-4xl md:text-7xl leading-tight aurora-text rise rise-2">
           ANDREW
           <br />
           VAN OSTRAND
         </h1>
         <p className="mt-6 font-body text-mist-200 text-base md:text-lg rise rise-3">
-          Software engineer — AI agents, blockchain &amp; systems
+          I build AI agents, blockchain systems, and the infrastructure behind them
         </p>
         <p className="mt-2 font-mono text-xs text-mist-400 tracking-widest rise rise-4">
           CS &amp; Business @ Lehigh · Capstone SWE @ Oracle
         </p>
         <div className="mt-14 flex flex-col items-center gap-2 text-mist-300 rise rise-5">
           <span className="font-mono text-[0.65rem] tracking-[0.35em] uppercase">
-            scroll to drift
+            scroll to explore
           </span>
           <FaArrowDown className="scroll-hint" />
         </div>
@@ -80,7 +80,7 @@ function About() {
       <motion.div {...fadeUp} className="glass-panel p-7 md:p-9 max-w-md">
         <p className="section-label mb-4">01 — About</p>
         <h2 className="font-display font-semibold text-2xl text-mist-50 mb-5">
-          Builder of systems that ship
+          Systems that ship
         </h2>
         <p className="text-mist-200 leading-relaxed text-sm md:text-base">
           I'm a student at <span className="text-aurora-cyan">Lehigh University</span> (GPA 3.71)
@@ -118,7 +118,7 @@ function Experience() {
       <motion.div {...fadeUp} className="glass-panel p-7 md:p-9 max-w-lg max-h-[80vh] overflow-y-auto">
         <p className="section-label mb-4">02 — Experience</p>
         <h2 className="font-display font-semibold text-2xl text-mist-50 mb-6">
-          Three stars, one constellation
+          Where I've worked
         </h2>
         <div className="space-y-6">
           {EXPERIENCES.map((exp) => (
@@ -205,7 +205,7 @@ function ArchipelagoSection() {
       <motion.div {...fadeUp} className="max-w-md w-full">
         <p className="section-label mb-4">06 — More Work</p>
         <h2 className="font-display font-semibold text-2xl text-mist-50 mb-5">
-          The outer archipelago
+          More projects
         </h2>
         <div className="space-y-3">
           {ARCHIPELAGO_PROJECTS.map((p) => (
@@ -248,7 +248,7 @@ function Skills() {
       <motion.div {...fadeUp} className="glass-panel p-7 md:p-9 max-w-lg max-h-[80vh] overflow-y-auto">
         <p className="section-label mb-4">07 — Skills</p>
         <h2 className="font-display font-semibold text-2xl text-mist-50 mb-6">
-          Orbiting instruments
+          Technical toolkit
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5">
           {SKILL_CATEGORIES.map((cat) => (
@@ -277,7 +277,7 @@ function Contact() {
       <motion.div {...fadeUp} className="text-center max-w-xl">
         <p className="section-label mb-5">08 — Contact</p>
         <h2 className="font-display font-bold text-3xl md:text-5xl aurora-text mb-5">
-          Step through the portal
+          Let's work together
         </h2>
         <p className="text-mist-200 text-sm md:text-base mb-8">
           Open to new projects, opportunities, and collaborations.
@@ -309,7 +309,7 @@ function Contact() {
           ))}
         </div>
         <p className="font-mono text-[0.6rem] text-mist-400/70 tracking-widest mt-12">
-          © {new Date().getFullYear()} ANDREW VAN OSTRAND — BUILT IN THE VOID WITH THREE.JS
+          © {new Date().getFullYear()} ANDREW VAN OSTRAND — BUILT WITH REACT THREE FIBER
         </p>
       </motion.div>
     </Section>

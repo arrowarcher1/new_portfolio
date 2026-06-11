@@ -54,6 +54,50 @@ export default function ProfPairIsland({ position, color = '#22d3ee' }) {
 
   return (
     <IslandBase position={position} color={color}>
+      {/* Campus archway between the two groups */}
+      <group position={[0, 0, -1.1]}>
+        <mesh position={[-0.55, 0.45, 0]}>
+          <boxGeometry args={[0.18, 0.9, 0.18]} />
+          <meshStandardMaterial color="#5b4480" flatShading roughness={0.8} />
+        </mesh>
+        <mesh position={[0.55, 0.45, 0]}>
+          <boxGeometry args={[0.18, 0.9, 0.18]} />
+          <meshStandardMaterial color="#5b4480" flatShading roughness={0.8} />
+        </mesh>
+        <mesh position={[0, 0.97, 0]}>
+          <boxGeometry args={[1.45, 0.16, 0.24]} />
+          <meshStandardMaterial color="#6d549a" flatShading roughness={0.8} />
+        </mesh>
+        <mesh position={[0, 1.13, 0]}>
+          <coneGeometry args={[0.18, 0.24, 4]} />
+          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={1.2} flatShading />
+        </mesh>
+        {/* Arch lamp glow */}
+        <mesh position={[0, 0.84, 0.13]}>
+          <sphereGeometry args={[0.05, 8, 6]} />
+          <meshStandardMaterial color="#f0abfc" emissive="#f0abfc" emissiveIntensity={2.4} />
+        </mesh>
+      </group>
+
+      {/* Book stacks beside the professors */}
+      {[
+        { p: [1.1, 0, 1.15], colors: ['#22d3ee', '#fbbf24', '#d946ef'] },
+        { p: [1.95, 0, 0.15], colors: ['#34d399', '#8b5cf6'] },
+      ].map((stack, si) => (
+        <group key={`bk${si}`} position={stack.p}>
+          {stack.colors.map((c, i) => (
+            <mesh
+              key={i}
+              position={[0, 0.045 + i * 0.09, 0]}
+              rotation={[0, i * 0.6 - 0.3, 0]}
+            >
+              <boxGeometry args={[0.34, 0.08, 0.24]} />
+              <meshStandardMaterial color={c} emissive={c} emissiveIntensity={0.35} flatShading />
+            </mesh>
+          ))}
+        </group>
+      ))}
+
       {STUDENTS.map((p, i) => (
         <Figure key={`s${i}`} position={p} color="#22d3ee" height={0.6} />
       ))}

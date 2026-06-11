@@ -1,7 +1,7 @@
 import { useMemo, useRef } from 'react'
 import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
-import { Line } from '@react-three/drei'
+import { Line, Edges } from '@react-three/drei'
 import IslandBase from './IslandBase'
 
 // A chain of evidence blocks spiraling skyward, a verification pulse
@@ -48,7 +48,30 @@ export default function TruthTrailIsland({ position, color = '#34d399' }) {
           roughness={0.4}
           metalness={0.5}
         />
+        <Edges color={color} threshold={15} />
       </mesh>
+      {/* Padlock sealing the vault: body + shackle */}
+      <group position={[0, 0.72, 0.31]}>
+        <mesh position={[0, 0.1, 0]}>
+          <boxGeometry args={[0.2, 0.16, 0.08]} />
+          <meshStandardMaterial color="#fbbf24" emissive="#fbbf24" emissiveIntensity={0.8} flatShading metalness={0.7} roughness={0.3} />
+        </mesh>
+        <mesh position={[0, 0.2, 0]}>
+          <torusGeometry args={[0.07, 0.018, 6, 16, Math.PI]} />
+          <meshStandardMaterial color="#fbbf24" emissive="#fbbf24" emissiveIntensity={0.8} metalness={0.7} roughness={0.3} />
+        </mesh>
+      </group>
+      {/* Evidence slips scattered on the turf */}
+      {[
+        { p: [0.85, 0.03, 0.55], r: 0.5 },
+        { p: [-0.7, 0.03, 0.8], r: -0.9 },
+        { p: [0.5, 0.03, -0.85], r: 1.8 },
+      ].map((slip, i) => (
+        <mesh key={`slip${i}`} position={slip.p} rotation={[-Math.PI / 2, 0, slip.r]}>
+          <planeGeometry args={[0.3, 0.4]} />
+          <meshStandardMaterial color="#e9e1fc" emissive="#e9e1fc" emissiveIntensity={0.25} side={THREE.DoubleSide} />
+        </mesh>
+      ))}
 
       {/* Chain links */}
       <Line
@@ -71,6 +94,7 @@ export default function TruthTrailIsland({ position, color = '#34d399' }) {
             roughness={0.3}
             metalness={0.6}
           />
+          <Edges color={color} threshold={15} />
         </mesh>
       ))}
     </IslandBase>

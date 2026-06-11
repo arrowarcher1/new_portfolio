@@ -24,7 +24,7 @@ export function IntroVeil() {
           <div className="flex flex-col items-center gap-6">
             <div className="loader-orb h-3 w-3 rounded-full bg-aurora-fuchsia shadow-[0_0_30px_#d946ef]" />
             <p className="font-mono text-[0.65rem] tracking-[0.4em] text-mist-300 uppercase">
-              entering the void
+              andrew van ostrand
             </p>
           </div>
         </motion.div>
