@@ -75,7 +75,7 @@ export default function ConvergeIsland({ position, color = '#ec4899' }) {
     if (orb.current) {
       const s = Math.sin(t * 1.5)
       orb.current.position.x = s * 0.85
-      orb.current.position.y = 1.05 + (1 - s * s) * 0.3
+      orb.current.position.y = 1.0 + (1 - s * s) * 0.2
       orb.current.scale.setScalar(1 + Math.sin(t * 6) * 0.12)
     }
     if (ring.current) {
@@ -91,7 +91,28 @@ export default function ConvergeIsland({ position, color = '#ec4899' }) {
   })
 
   return (
-    <IslandBase position={position} color={color}>
+    <IslandBase position={position} color={color} seed={2}>
+      {/* Negotiation pavilion over the table */}
+      {[
+        [-0.85, -0.85],
+        [-0.85, 0.85],
+        [0.85, -0.85],
+        [0.85, 0.85],
+      ].map(([x, z], i) => (
+        <mesh key={`post${i}`} position={[x, 0.62, z]}>
+          <cylinderGeometry args={[0.045, 0.06, 1.24, 5]} />
+          <meshStandardMaterial color="#3b2a66" flatShading roughness={0.7} />
+        </mesh>
+      ))}
+      <mesh position={[0, 1.42, 0]} rotation={[0, Math.PI / 4, 0]}>
+        <coneGeometry args={[1.32, 0.5, 4]} />
+        <meshStandardMaterial color="#4c3a78" flatShading roughness={0.7} />
+      </mesh>
+      <mesh position={[0, 1.7, 0]}>
+        <sphereGeometry args={[0.07, 8, 6]} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={2} />
+      </mesh>
+
       {/* Negotiation table */}
       <mesh position={[0, 0.3, 0]}>
         <cylinderGeometry args={[0.55, 0.42, 0.1, 6]} />
@@ -126,8 +147,8 @@ export default function ConvergeIsland({ position, color = '#ec4899' }) {
         <meshStandardMaterial color="#fff7fb" emissive="#f0abfc" emissiveIntensity={3} />
       </mesh>
 
-      {/* ZOPA ring hovering above the deal */}
-      <mesh ref={ring} position={[0, 2.1, 0]} rotation={[Math.PI / 2.4, 0, 0]}>
+      {/* ZOPA ring hovering above the pavilion */}
+      <mesh ref={ring} position={[0, 2.25, 0]} rotation={[Math.PI / 2.4, 0, 0]}>
         <torusGeometry args={[0.55, 0.025, 8, 40]} />
         <meshStandardMaterial color="#f0abfc" emissive="#d946ef" emissiveIntensity={1.6} />
       </mesh>

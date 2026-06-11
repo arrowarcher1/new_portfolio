@@ -1,10 +1,11 @@
 import { useMemo } from 'react'
 import * as THREE from 'three'
 import { Float } from '@react-three/drei'
+import { jitterGeometry, Shadows, PineTree, RoundTree } from '../props'
 
-// Floating low-poly island: layered turf/soil/rock strata, a jagged
-// two-tier keel with embedded boulders, rim crystals and grass tufts,
-// orbiting pebbles, and a colored glow pooling beneath.
+// Floating low-poly island: vertex-sculpted rock keel and turf, layered
+// strata, trees, rim crystals, grass tufts, orbiting pebbles, and a
+// colored glow pooling beneath.
 // Children are the themed scene standing on top (y=0 is the turf surface).
 
 export default function IslandBase({
@@ -12,38 +13,60 @@ export default function IslandBase({
   color = '#d946ef',
   scale = 1,
   float = true,
+  trees = true,
+  seed = 1,
   children,
 }) {
+  const geo = useMemo(
+    () => ({
+      keel: jitterGeometry(new THREE.ConeGeometry(2.15, 2.6, 8, 3), 0.24, seed),
+      keelTip: jitterGeometry(new THREE.ConeGeometry(1.0, 1.7, 6, 2), 0.18, seed + 3),
+      soil: jitterGeometry(new THREE.CylinderGeometry(2.36, 2.16, 0.34, 8, 1), 0.07, seed + 5),
+      turf: jitterGeometry(new THREE.CylinderGeometry(2.32, 2.44, 0.36, 8, 1), 0.06, seed + 7),
+    }),
+    [seed],
+  )
+
   const { pebbles, crystals, tufts, boulders } = useMemo(() => {
     const pebbles = Array.from({ length: 4 }, (_, i) => ({
-      angle: (i / 4) * Math.PI * 2 + i * 1.3,
+      angle: (i / 4) * Math.PI * 2 + i * 1.3 + seed,
       radius: 3.1 + (i % 2) * 0.7,
       y: -0.6 + (i % 3) * 0.5,
       size: 0.16 + (i % 3) * 0.09,
     }))
-    const crystals = Array.from({ length: 5 }, (_, i) => {
-      const a = (i / 5) * Math.PI * 2 + 0.7
+    const crystals = Array.from({ length: 4 }, (_, i) => {
+      const a = (i / 4) * Math.PI * 2 + 0.9 + seed
       return {
-        pos: [Math.cos(a) * 1.95, 0.16, Math.sin(a) * 1.95],
+        pos: [Math.cos(a) * 1.9, 0.16, Math.sin(a) * 1.9],
         h: 0.28 + ((i * 7) % 3) * 0.14,
         tilt: ((i * 13) % 10) / 18 - 0.25,
       }
     })
     const tufts = Array.from({ length: 6 }, (_, i) => {
-      const a = (i / 6) * Math.PI * 2 + 0.2
+      const a = (i / 6) * Math.PI * 2 + 0.2 + seed * 2
       const r = 1.2 + ((i * 11) % 5) * 0.22
       return { pos: [Math.cos(a) * r, 0.12, Math.sin(a) * r], s: 0.09 + ((i * 3) % 3) * 0.04 }
     })
     const boulders = Array.from({ length: 4 }, (_, i) => {
-      const a = (i / 4) * Math.PI * 2 + 1.1
+      const a = (i / 4) * Math.PI * 2 + 1.1 + seed
       return {
-        pos: [Math.cos(a) * 1.6, -1.1 - (i % 2) * 0.6, Math.sin(a) * 1.6],
+        pos: [Math.cos(a) * 1.55, -1.1 - (i % 2) * 0.6, Math.sin(a) * 1.55],
         s: 0.35 + (i % 3) * 0.15,
-        rot: [i * 0.8, i * 1.7, i * 0.5],
+        rot: [i * 0.8 + seed, i * 1.7, i * 0.5],
       }
     })
     return { pebbles, crystals, tufts, boulders }
-  }, [])
+  }, [seed])
+
+  // Tree placement: back rim, away from the themed scene at center
+  const treeSpots = useMemo(() => {
+    const a0 = 2.2 + seed * 0.7
+    return [
+      { kind: 'pine', pos: [Math.cos(a0) * 1.85, 0.05, Math.sin(a0) * 1.85], s: 1.15 },
+      { kind: 'pine', pos: [Math.cos(a0 + 0.55) * 1.6, 0.05, Math.sin(a0 + 0.55) * 1.6], s: 0.8 },
+      { kind: 'round', pos: [Math.cos(a0 - 0.6) * 1.75, 0.05, Math.sin(a0 - 0.6) * 1.75], s: 1 },
+    ]
+  }, [seed])
 
   return (
     <group position={position} scale={scale}>
@@ -52,38 +75,66 @@ export default function IslandBase({
         rotationIntensity={float ? 0.06 : 0}
         floatIntensity={float ? 0.5 : 0}
       >
-        {/* Upper keel */}
-        <mesh position={[0, -1.3, 0]} rotation={[Math.PI, 0.3, 0]}>
-          <coneGeometry args={[2.1, 2.2, 7, 2]} />
-          <meshStandardMaterial color="#3d2c63" flatShading roughness={0.9} />
-        </mesh>
-        {/* Lower keel tip, offset for a jagged silhouette */}
-        <mesh position={[0.35, -2.6, -0.2]} rotation={[Math.PI, 1.2, 0.12]}>
-          <coneGeometry args={[1.05, 1.7, 5, 1]} />
-          <meshStandardMaterial color="#332253" flatShading roughness={0.95} />
-        </mesh>
-        {/* Boulders embedded in the keel */}
-        {boulders.map((b, i) => (
-          <mesh key={`b${i}`} position={b.pos} rotation={b.rot}>
-            <dodecahedronGeometry args={[b.s, 0]} />
-            <meshStandardMaterial color="#46336e" flatShading roughness={0.9} />
+        <Shadows>
+          {/* Sculpted rock keel */}
+          <mesh geometry={geo.keel} position={[0, -1.32, 0]} rotation={[Math.PI, 0.3, 0]}>
+            <meshStandardMaterial color="#3d2c63" flatShading roughness={0.9} />
           </mesh>
-        ))}
+          <mesh
+            geometry={geo.keelTip}
+            position={[0.35, -2.55, -0.2]}
+            rotation={[Math.PI, 1.2, 0.12]}
+          >
+            <meshStandardMaterial color="#332253" flatShading roughness={0.95} />
+          </mesh>
+          {/* Boulders embedded in the keel */}
+          {boulders.map((b, i) => (
+            <mesh key={`b${i}`} position={b.pos} rotation={b.rot}>
+              <dodecahedronGeometry args={[b.s, 0]} />
+              <meshStandardMaterial color="#46336e" flatShading roughness={0.9} />
+            </mesh>
+          ))}
 
-        {/* Soil stratum */}
-        <mesh position={[0, -0.38, 0]}>
-          <cylinderGeometry args={[2.36, 2.18, 0.32, 6]} />
-          <meshStandardMaterial color="#5b4480" flatShading roughness={0.85} />
-        </mesh>
-        {/* Turf slab */}
-        <mesh position={[0, -0.06, 0]}>
-          <cylinderGeometry args={[2.3, 2.42, 0.34, 6]} />
-          <meshStandardMaterial color="#1f8f6f" flatShading roughness={0.7} />
-        </mesh>
-        {/* Turf rim glow — pulled clear of the soil layer and depth-decoupled
-            so it can't z-fight the strata faces */}
+          {/* Soil stratum */}
+          <mesh geometry={geo.soil} position={[0, -0.38, 0]}>
+            <meshStandardMaterial color="#5b4480" flatShading roughness={0.85} />
+          </mesh>
+          {/* Turf slab */}
+          <mesh geometry={geo.turf} position={[0, -0.06, 0]}>
+            <meshStandardMaterial color="#249e77" flatShading roughness={0.7} />
+          </mesh>
+
+          {/* Trees on the back rim */}
+          {trees &&
+            treeSpots.map((t, i) =>
+              t.kind === 'pine' ? (
+                <PineTree key={`tr${i}`} position={t.pos} scale={t.s} seed={seed + i * 3} />
+              ) : (
+                <RoundTree key={`tr${i}`} position={t.pos} scale={t.s} seed={seed + i * 3} />
+              ),
+            )}
+
+          {/* Grass tufts */}
+          {tufts.map((t, i) => (
+            <group key={`t${i}`} position={t.pos}>
+              <mesh position={[-t.s * 0.5, 0, 0]} rotation={[0, 0, 0.25]}>
+                <coneGeometry args={[t.s * 0.45, t.s * 2.4, 3]} />
+                <meshStandardMaterial color="#2fb98a" flatShading />
+              </mesh>
+              <mesh position={[t.s * 0.5, 0, t.s * 0.3]} rotation={[0.1, 0, -0.2]}>
+                <coneGeometry args={[t.s * 0.4, t.s * 1.8, 3]} />
+                <meshStandardMaterial color="#27a37a" flatShading />
+              </mesh>
+            </group>
+          ))}
+
+          {/* Themed scene on top */}
+          <group position={[0, 0.15, 0]}>{children}</group>
+        </Shadows>
+
+        {/* Turf rim glow — depth-decoupled so it can't z-fight the strata */}
         <mesh position={[0, -0.245, 0]}>
-          <cylinderGeometry args={[2.47, 2.47, 0.04, 6, 1, true]} />
+          <cylinderGeometry args={[2.49, 2.49, 0.04, 8, 1, true]} />
           <meshBasicMaterial
             color={color}
             transparent
@@ -107,22 +158,6 @@ export default function IslandBase({
             />
           </mesh>
         ))}
-        {/* Grass tufts */}
-        {tufts.map((t, i) => (
-          <group key={`t${i}`} position={t.pos}>
-            <mesh position={[-t.s * 0.5, 0, 0]} rotation={[0, 0, 0.25]}>
-              <coneGeometry args={[t.s * 0.45, t.s * 2.4, 3]} />
-              <meshStandardMaterial color="#2fb98a" flatShading />
-            </mesh>
-            <mesh position={[t.s * 0.5, 0, t.s * 0.3]} rotation={[0.1, 0, -0.2]}>
-              <coneGeometry args={[t.s * 0.4, t.s * 1.8, 3]} />
-              <meshStandardMaterial color="#27a37a" flatShading />
-            </mesh>
-          </group>
-        ))}
-
-        {/* Themed scene on top */}
-        <group position={[0, 0.15, 0]}>{children}</group>
 
         {/* Orbiting pebbles */}
         {pebbles.map((p, i) => (
@@ -137,8 +172,7 @@ export default function IslandBase({
         ))}
       </Float>
 
-      {/* Glow pool beneath — kept below the bobbing keel tip so the two
-          never intersect mid-float */}
+      {/* Glow pool beneath — below the bobbing keel's lowest point */}
       <mesh position={[0, -3.85, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <circleGeometry args={[2.6, 32]} />
         <meshBasicMaterial

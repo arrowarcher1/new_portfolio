@@ -62,6 +62,7 @@ export default function Archipelago({ position }) {
           position={OFFSETS[i]}
           color={project.color}
           scale={0.55}
+          seed={17 + i * 5}
         >
           <Float speed={2} rotationIntensity={0.8} floatIntensity={0.8}>
             <group position={[0, 0.9, 0]}>{EMBLEMS[i](project.color)}</group>

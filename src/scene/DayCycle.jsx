@@ -98,7 +98,21 @@ export default function DayCycle() {
         </mesh>
       </group>
 
-      <directionalLight ref={dirLight} intensity={1} color="#fff3d6" />
+      <directionalLight
+        ref={dirLight}
+        intensity={1}
+        color="#fff3d6"
+        castShadow
+        shadow-mapSize={[2048, 2048]}
+        shadow-bias={-0.0002}
+        shadow-normalBias={0.04}
+        shadow-camera-left={-16}
+        shadow-camera-right={16}
+        shadow-camera-top={16}
+        shadow-camera-bottom={-16}
+        shadow-camera-near={5}
+        shadow-camera-far={150}
+      />
       <object3D ref={lightTarget} />
       <ambientLight ref={ambLight} intensity={0.7} />
       <hemisphereLight ref={hemiLight} intensity={0.45} />

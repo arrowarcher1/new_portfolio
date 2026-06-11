@@ -36,22 +36,43 @@ export default function TruthTrailIsland({ position, color = '#34d399' }) {
   })
 
   return (
-    <IslandBase position={position} color={color}>
-      {/* Anchor vault on the turf */}
-      <mesh position={[0, 0.3, 0]}>
-        <boxGeometry args={[0.6, 0.6, 0.6]} />
+    <IslandBase position={position} color={color} seed={6}>
+      {/* Archive vault building */}
+      <mesh position={[0, 0.36, 0]}>
+        <boxGeometry args={[0.95, 0.72, 0.72]} />
         <meshStandardMaterial
           color="#0f3d2e"
           emissive={color}
-          emissiveIntensity={0.5}
+          emissiveIntensity={0.4}
           flatShading
           roughness={0.4}
           metalness={0.5}
         />
         <Edges color={color} threshold={15} scale={1.04} />
       </mesh>
-      {/* Padlock sealing the vault: body + shackle */}
-      <group position={[0, 0.72, 0.31]}>
+      {/* Pitched roof */}
+      <mesh position={[0, 0.9, 0]} rotation={[0, Math.PI / 4, 0]}>
+        <coneGeometry args={[0.78, 0.4, 4]} />
+        <meshStandardMaterial color="#143326" flatShading roughness={0.7} />
+      </mesh>
+      {/* Door and columns */}
+      <mesh position={[0, 0.26, 0.37]}>
+        <boxGeometry args={[0.26, 0.45, 0.04]} />
+        <meshStandardMaterial color="#091f16" flatShading />
+      </mesh>
+      {[-0.36, 0.36].map((x, i) => (
+        <mesh key={i} position={[x, 0.36, 0.39]}>
+          <cylinderGeometry args={[0.045, 0.055, 0.72, 5]} />
+          <meshStandardMaterial color="#1c5a42" flatShading roughness={0.6} />
+        </mesh>
+      ))}
+      {/* Front step */}
+      <mesh position={[0, 0.04, 0.48]}>
+        <boxGeometry args={[0.42, 0.08, 0.2]} />
+        <meshStandardMaterial color="#1c5a42" flatShading />
+      </mesh>
+      {/* Padlock sealing the door: body + shackle */}
+      <group position={[0, 0.52, 0.4]}>
         <mesh position={[0, 0.1, 0]}>
           <boxGeometry args={[0.2, 0.16, 0.08]} />
           <meshStandardMaterial color="#fbbf24" emissive="#fbbf24" emissiveIntensity={0.8} flatShading metalness={0.7} roughness={0.3} />
@@ -75,7 +96,7 @@ export default function TruthTrailIsland({ position, color = '#34d399' }) {
 
       {/* Chain links */}
       <Line
-        points={[new THREE.Vector3(0, 0.45, 0), ...blockPositions]}
+        points={[new THREE.Vector3(0, 1.05, 0), ...blockPositions]}
         color={color}
         lineWidth={1.5}
         transparent

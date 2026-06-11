@@ -53,29 +53,44 @@ export default function ProfPairIsland({ position, color = '#22d3ee' }) {
   })
 
   return (
-    <IslandBase position={position} color={color}>
-      {/* Campus archway between the two groups */}
-      <group position={[0, 0, -1.1]}>
-        <mesh position={[-0.55, 0.45, 0]}>
-          <boxGeometry args={[0.18, 0.9, 0.18]} />
-          <meshStandardMaterial color="#5b4480" flatShading roughness={0.8} />
-        </mesh>
-        <mesh position={[0.55, 0.45, 0]}>
-          <boxGeometry args={[0.18, 0.9, 0.18]} />
-          <meshStandardMaterial color="#5b4480" flatShading roughness={0.8} />
-        </mesh>
-        <mesh position={[0, 0.97, 0]}>
-          <boxGeometry args={[1.45, 0.16, 0.24]} />
+    <IslandBase position={position} color={color} seed={11}>
+      {/* Campus clock tower behind the meeting ground */}
+      <group position={[0, 0, -1.15]}>
+        <mesh position={[0, 0.8, 0]}>
+          <boxGeometry args={[0.55, 1.6, 0.55]} />
           <meshStandardMaterial color="#6d549a" flatShading roughness={0.8} />
         </mesh>
-        <mesh position={[0, 1.13, 0]}>
-          <coneGeometry args={[0.18, 0.24, 4]} />
-          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={1.2} flatShading />
+        {/* Belt course */}
+        <mesh position={[0, 1.18, 0]}>
+          <boxGeometry args={[0.62, 0.07, 0.62]} />
+          <meshStandardMaterial color="#5b4480" flatShading />
         </mesh>
-        {/* Arch lamp glow */}
-        <mesh position={[0, 0.84, 0.13]}>
+        {/* Clock face + hands */}
+        <mesh position={[0, 1.38, 0.285]}>
+          <circleGeometry args={[0.16, 16]} />
+          <meshStandardMaterial color="#f5f1ff" emissive="#f5f1ff" emissiveIntensity={0.5} />
+        </mesh>
+        <mesh position={[0, 1.41, 0.29]} rotation={[0, 0, 0.6]}>
+          <boxGeometry args={[0.02, 0.11, 0.01]} />
+          <meshStandardMaterial color="#2d1657" />
+        </mesh>
+        <mesh position={[0, 1.38, 0.29]} rotation={[0, 0, -1.8]}>
+          <boxGeometry args={[0.018, 0.14, 0.01]} />
+          <meshStandardMaterial color="#2d1657" />
+        </mesh>
+        {/* Arched doorway */}
+        <mesh position={[0, 0.28, 0.275]}>
+          <boxGeometry args={[0.2, 0.36, 0.03]} />
+          <meshStandardMaterial color="#3b2a66" flatShading />
+        </mesh>
+        {/* Spire */}
+        <mesh position={[0, 1.82, 0]} rotation={[0, Math.PI / 4, 0]}>
+          <coneGeometry args={[0.46, 0.44, 4]} />
+          <meshStandardMaterial color="#4c3a78" flatShading roughness={0.7} />
+        </mesh>
+        <mesh position={[0, 2.1, 0]}>
           <sphereGeometry args={[0.05, 8, 6]} />
-          <meshStandardMaterial color="#f0abfc" emissive="#f0abfc" emissiveIntensity={2.4} />
+          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={2.2} />
         </mesh>
       </group>
 
