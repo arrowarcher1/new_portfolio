@@ -2,44 +2,24 @@ import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Line } from '@react-three/drei'
 import IslandBase from './IslandBase'
+import Character from '../Character'
 
 // Students on one side, professors on the other, match-beams arcing between.
 
 const STUDENTS = [
-  [-1.5, 0, -0.7],
-  [-1.7, 0, 0.3],
-  [-1.1, 0, 0.9],
+  { pos: [-1.5, 0, -0.7], model: 'adventurer', offset: 0 },
+  { pos: [-1.7, 0, 0.3], model: 'punk', offset: 0.7 },
+  { pos: [-1.1, 0, 0.9], model: 'character', offset: 1.3 },
 ]
 const PROFESSORS = [
-  [1.5, 0, -0.4],
-  [1.4, 0, 0.7],
+  { pos: [1.5, 0, -0.4], model: 'character', tint: '#3b2f63', offset: 0.4 },
+  { pos: [1.4, 0, 0.7], model: 'adventurer', tint: '#4a3527', offset: 1.1 },
 ]
 const MATCHES = [
   [0, 0],
   [1, 1],
   [2, 0],
 ]
-
-function Figure({ position, color, height = 0.7, cap = false }) {
-  return (
-    <group position={position}>
-      <mesh position={[0, height / 2, 0]}>
-        <coneGeometry args={[0.22, height, 5]} />
-        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.7} flatShading />
-      </mesh>
-      <mesh position={[0, height + 0.13, 0]}>
-        <sphereGeometry args={[0.15, 10, 8]} />
-        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={1.1} />
-      </mesh>
-      {cap && (
-        <mesh position={[0, height + 0.27, 0]} rotation={[0, Math.PI / 5, 0]}>
-          <boxGeometry args={[0.36, 0.05, 0.36]} />
-          <meshStandardMaterial color="#1d0f3a" flatShading />
-        </mesh>
-      )}
-    </group>
-  )
-}
 
 export default function ProfPairIsland({ position, color = '#22d3ee' }) {
   const beams = useRef([])
@@ -113,25 +93,42 @@ export default function ProfPairIsland({ position, color = '#22d3ee' }) {
         </group>
       ))}
 
-      {STUDENTS.map((p, i) => (
-        <Figure key={`s${i}`} position={p} color="#22d3ee" height={0.6} />
+      {STUDENTS.map((s, i) => (
+        <Character
+          key={`s${i}`}
+          model={s.model}
+          position={s.pos}
+          rotation={[0, Math.PI / 2 - i * 0.3, 0]}
+          scale={0.4}
+          anim="Idle"
+          timeOffset={s.offset}
+        />
       ))}
       {PROFESSORS.map((p, i) => (
-        <Figure key={`p${i}`} position={p} color="#fbbf24" height={0.8} cap />
+        <Character
+          key={`p${i}`}
+          model={p.model}
+          position={p.pos}
+          rotation={[0, -Math.PI / 2 + i * 0.4, 0]}
+          scale={0.46}
+          tint={p.tint}
+          anim="Idle"
+          timeOffset={p.offset}
+        />
       ))}
 
       {/* Match beams */}
       {MATCHES.map(([s, p], i) => {
-        const a = STUDENTS[s]
-        const b = PROFESSORS[p]
+        const a = STUDENTS[s].pos
+        const b = PROFESSORS[p].pos
         return (
           <Line
             key={i}
             ref={(el) => (beams.current[i] = el)}
             points={[
-              [a[0], 0.75, a[2]],
+              [a[0], 0.85, a[2]],
               [(a[0] + b[0]) / 2, 1.6, (a[2] + b[2]) / 2],
-              [b[0], 0.95, b[2]],
+              [b[0], 1.0, b[2]],
             ]}
             color="#f0abfc"
             lineWidth={1.2}

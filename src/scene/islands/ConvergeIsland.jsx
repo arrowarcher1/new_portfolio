@@ -2,65 +2,32 @@ import { useRef } from 'react'
 import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
 import IslandBase from './IslandBase'
+import Character from '../Character'
 
-// Two hologram agents negotiating at a table: each studies a floating
+// Two robot agents negotiating at a table: each studies a floating
 // holo-screen, an offer-orb shuttles between them, and the live deal
 // terms render as a small bar chart on the tabletop.
 
-function Agent({ position, color, facing = 1 }) {
+function HoloScreen({ position, rotation, color }) {
   return (
-    <group position={position} rotation={[0, (Math.PI / 2) * facing, 0]}>
-      {/* Body */}
-      <mesh position={[0, 0.42, 0]}>
-        <coneGeometry args={[0.28, 0.85, 5]} />
-        <meshStandardMaterial
+    <group position={position} rotation={rotation}>
+      <mesh>
+        <planeGeometry args={[0.46, 0.3]} />
+        <meshBasicMaterial
           color={color}
-          emissive={color}
-          emissiveIntensity={0.9}
-          flatShading
           transparent
-          opacity={0.85}
+          opacity={0.18}
+          side={THREE.DoubleSide}
+          blending={THREE.AdditiveBlending}
+          depthWrite={false}
         />
       </mesh>
-      {/* Arms reaching toward the table */}
-      <mesh position={[0.18, 0.55, 0.16]} rotation={[0, 0, -0.9]}>
-        <cylinderGeometry args={[0.04, 0.05, 0.38, 5]} />
-        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.7} flatShading />
-      </mesh>
-      <mesh position={[0.18, 0.55, -0.16]} rotation={[0, 0, -0.9]}>
-        <cylinderGeometry args={[0.04, 0.05, 0.38, 5]} />
-        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.7} flatShading />
-      </mesh>
-      {/* Head */}
-      <mesh position={[0, 1.05, 0]}>
-        <sphereGeometry args={[0.2, 12, 10]} />
-        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={1.4} />
-      </mesh>
-      {/* Visor */}
-      <mesh position={[0.13, 1.06, 0]} rotation={[0, 0, -0.15]}>
-        <boxGeometry args={[0.06, 0.08, 0.26]} />
-        <meshStandardMaterial color="#f5f1ff" emissive="#f5f1ff" emissiveIntensity={2} />
-      </mesh>
-      {/* Private holo-screen floating beside the agent */}
-      <group position={[0.42, 1.18, 0.52]} rotation={[0, -0.5 , 0.08]}>
-        <mesh>
-          <planeGeometry args={[0.46, 0.3]} />
-          <meshBasicMaterial
-            color={color}
-            transparent
-            opacity={0.18}
-            side={THREE.DoubleSide}
-            blending={THREE.AdditiveBlending}
-            depthWrite={false}
-          />
+      {[0.08, 0.0, -0.08].map((y, i) => (
+        <mesh key={i} position={[-0.04 + (i % 2) * 0.05, y, 0.002]}>
+          <planeGeometry args={[0.3 - i * 0.06, 0.022]} />
+          <meshBasicMaterial color={color} transparent opacity={0.75} side={THREE.DoubleSide} />
         </mesh>
-        {[0.08, 0.0, -0.08].map((y, i) => (
-          <mesh key={i} position={[-0.04 + (i % 2) * 0.05, y, 0.002]}>
-            <planeGeometry args={[0.3 - i * 0.06, 0.022]} />
-            <meshBasicMaterial color={color} transparent opacity={0.75} side={THREE.DoubleSide} />
-          </mesh>
-        ))}
-      </group>
+      ))}
     </group>
   )
 }
@@ -138,8 +105,25 @@ export default function ConvergeIsland({ position, color = '#ec4899' }) {
         </mesh>
       ))}
 
-      <Agent position={[-1.3, 0, 0]} color="#ec4899" facing={1} />
-      <Agent position={[1.3, 0, 0]} color="#22d3ee" facing={-1} />
+      <Character
+        model="robot"
+        position={[-1.25, 0, 0]}
+        rotation={[0, Math.PI / 2, 0]}
+        scale={0.42}
+        tint="#ec4899"
+        anim="Idle"
+      />
+      <Character
+        model="robot"
+        position={[1.25, 0, 0]}
+        rotation={[0, -Math.PI / 2, 0]}
+        scale={0.42}
+        tint="#22d3ee"
+        anim="Idle"
+        timeOffset={0.8}
+      />
+      <HoloScreen position={[-1.05, 1.15, 0.55]} rotation={[0, 0.5, 0.06]} color="#ec4899" />
+      <HoloScreen position={[1.05, 1.15, -0.55]} rotation={[0, Math.PI - 0.5, -0.06]} color="#22d3ee" />
 
       {/* The offer orb */}
       <mesh ref={orb} position={[0, 1.05, 0]}>
