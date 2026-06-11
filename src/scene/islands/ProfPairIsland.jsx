@@ -2,18 +2,20 @@ import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Line } from '@react-three/drei'
 import IslandBase from './IslandBase'
-import Character from '../Character'
+import { Pawn } from '../props'
 
 // Students on one side, professors on the other, match-beams arcing between.
+// Figures are minimal pawn pieces in team colors — students cyan,
+// professors amber with graduation caps.
 
 const STUDENTS = [
-  { pos: [-1.5, 0, -0.7], model: 'adventurer', offset: 0 },
-  { pos: [-1.7, 0, 0.3], model: 'punk', offset: 0.7 },
-  { pos: [-1.1, 0, 0.9], model: 'character', offset: 1.3 },
+  { pos: [-1.5, 0, -0.7] },
+  { pos: [-1.7, 0, 0.3] },
+  { pos: [-1.1, 0, 0.9] },
 ]
 const PROFESSORS = [
-  { pos: [1.5, 0, -0.4], model: 'character', tint: '#3b2f63', offset: 0.4 },
-  { pos: [1.4, 0, 0.7], model: 'adventurer', tint: '#4a3527', offset: 1.1 },
+  { pos: [1.5, 0, -0.4] },
+  { pos: [1.4, 0, 0.7] },
 ]
 const MATCHES = [
   [0, 0],
@@ -94,26 +96,22 @@ export default function ProfPairIsland({ position, color = '#22d3ee' }) {
       ))}
 
       {STUDENTS.map((s, i) => (
-        <Character
+        <Pawn
           key={`s${i}`}
-          model={s.model}
           position={s.pos}
           rotation={[0, Math.PI / 2 - i * 0.3, 0]}
-          scale={0.4}
-          anim="Idle"
-          timeOffset={s.offset}
+          color="#22d3ee"
+          scale={0.95}
         />
       ))}
       {PROFESSORS.map((p, i) => (
-        <Character
+        <Pawn
           key={`p${i}`}
-          model={p.model}
           position={p.pos}
           rotation={[0, -Math.PI / 2 + i * 0.4, 0]}
-          scale={0.46}
-          tint={p.tint}
-          anim="Idle"
-          timeOffset={p.offset}
+          color="#fbbf24"
+          scale={1.15}
+          cap
         />
       ))}
 

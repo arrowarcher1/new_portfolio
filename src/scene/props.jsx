@@ -90,26 +90,45 @@ export function Shadows({ children }) {
   )
 }
 
-export function Lantern({ position, color = '#fbbf24', scale = 1 }) {
+// Minimal chess-pawn figure — reads as "person" while staying in the
+// scene's own visual language. Smooth shaded, matte, soft emissive.
+const PAWN_PROFILE = (() => {
+  const pts = []
+  const profile = [
+    [0.2, 0],
+    [0.2, 0.04],
+    [0.16, 0.12],
+    [0.1, 0.26],
+    [0.075, 0.38],
+    [0.07, 0.46],
+  ]
+  profile.forEach(([x, y]) => pts.push(new THREE.Vector2(x, y)))
+  return pts
+})()
+
+export function Pawn({ position, rotation = [0, 0, 0], color = '#22d3ee', scale = 1, cap = false }) {
   return (
-    <group position={position} scale={scale}>
-      <mesh position={[0, 0.3, 0]}>
-        <cylinderGeometry args={[0.025, 0.035, 0.6, 5]} />
-        <meshStandardMaterial color="#2d2440" flatShading roughness={0.7} />
+    <group position={position} rotation={rotation} scale={scale}>
+      <mesh>
+        <latheGeometry args={[PAWN_PROFILE, 24]} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.22} roughness={0.45} />
       </mesh>
-      <mesh position={[0, 0.64, 0]}>
-        <boxGeometry args={[0.12, 0.14, 0.12]} />
-        <meshStandardMaterial
-          color={color}
-          emissive={color}
-          emissiveIntensity={1.8}
-          flatShading
-        />
+      <mesh position={[0, 0.56, 0]}>
+        <sphereGeometry args={[0.13, 20, 16]} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.3} roughness={0.4} />
       </mesh>
-      <mesh position={[0, 0.74, 0]}>
-        <coneGeometry args={[0.1, 0.09, 4]} />
-        <meshStandardMaterial color="#2d2440" flatShading />
-      </mesh>
+      {cap && (
+        <group position={[0, 0.66, 0]} rotation={[0, Math.PI / 6, 0.06]}>
+          <mesh>
+            <boxGeometry args={[0.34, 0.035, 0.34]} />
+            <meshStandardMaterial color="#2d1657" roughness={0.6} />
+          </mesh>
+          <mesh position={[0, 0.035, 0]}>
+            <sphereGeometry args={[0.025, 8, 6]} />
+            <meshStandardMaterial color="#fbbf24" emissive="#fbbf24" emissiveIntensity={1} />
+          </mesh>
+        </group>
+      )}
     </group>
   )
 }

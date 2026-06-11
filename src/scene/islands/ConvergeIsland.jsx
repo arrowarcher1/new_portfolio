@@ -2,11 +2,78 @@ import { useRef } from 'react'
 import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
 import IslandBase from './IslandBase'
-import Character from '../Character'
 
-// Two robot agents negotiating at a table: each studies a floating
-// holo-screen, an offer-orb shuttles between them, and the live deal
-// terms render as a small bar chart on the tabletop.
+// Two crystalline AI entities negotiating at a table: faceted cores with
+// orbiting rings, each studying a floating holo-screen, an offer-orb
+// shuttling between them, live deal terms as a bar chart on the tabletop.
+
+function CrystalAgent({ position, color, timeOffset = 0 }) {
+  const core = useRef()
+  const shell = useRef()
+  const ring = useRef()
+
+  useFrame((state) => {
+    const t = state.clock.elapsedTime + timeOffset
+    if (core.current) {
+      core.current.rotation.y = t * 0.6
+      core.current.position.y = 1.0 + Math.sin(t * 1.4) * 0.06
+    }
+    if (shell.current) {
+      shell.current.rotation.y = -t * 0.25
+      shell.current.rotation.x = Math.sin(t * 0.5) * 0.2
+      shell.current.position.y = 1.0 + Math.sin(t * 1.4) * 0.06
+    }
+    if (ring.current) {
+      ring.current.rotation.z = t * 0.5
+      ring.current.position.y = 1.0 + Math.sin(t * 1.4) * 0.06
+    }
+  })
+
+  return (
+    <group position={position}>
+      {/* Faceted core */}
+      <mesh ref={core} position={[0, 1.0, 0]}>
+        <octahedronGeometry args={[0.2, 0]} />
+        <meshStandardMaterial
+          color={color}
+          emissive={color}
+          emissiveIntensity={1.8}
+          flatShading
+        />
+      </mesh>
+      {/* Translucent shell */}
+      <mesh ref={shell} position={[0, 1.0, 0]}>
+        <icosahedronGeometry args={[0.34, 0]} />
+        <meshStandardMaterial
+          color={color}
+          emissive={color}
+          emissiveIntensity={0.4}
+          transparent
+          opacity={0.22}
+          flatShading
+          depthWrite={false}
+        />
+      </mesh>
+      {/* Orbit ring */}
+      <mesh ref={ring} position={[0, 1.0, 0]} rotation={[Math.PI / 2.6, 0.3, 0]}>
+        <torusGeometry args={[0.46, 0.014, 8, 40]} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={1.2} />
+      </mesh>
+      {/* Grounding glow on the turf */}
+      <mesh position={[0, 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[0.34, 24]} />
+        <meshBasicMaterial
+          color={color}
+          transparent
+          opacity={0.3}
+          blending={THREE.AdditiveBlending}
+          depthWrite={false}
+        />
+      </mesh>
+      <pointLight position={[0, 1.2, 0.3]} color={color} intensity={4} distance={3} />
+    </group>
+  )
+}
 
 function HoloScreen({ position, rotation, color }) {
   return (
@@ -105,41 +172,8 @@ export default function ConvergeIsland({ position, color = '#ec4899' }) {
         </mesh>
       ))}
 
-      {[
-        { x: -1.35, color: '#ec4899', offset: 0 },
-        { x: 1.35, color: '#22d3ee', offset: 0.8 },
-      ].map((agent) => (
-        <group key={agent.color}>
-          <Character
-            model="robot"
-            position={[agent.x, 0.05, 0]}
-            rotation={[0, (Math.PI / 2) * Math.sign(-agent.x), 0]}
-            scale={0.3}
-            hover
-            timeOffset={agent.offset}
-          />
-          {/* Team ring on the turf */}
-          <mesh position={[agent.x, 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-            <torusGeometry args={[0.42, 0.025, 8, 32]} />
-            <meshStandardMaterial
-              color={agent.color}
-              emissive={agent.color}
-              emissiveIntensity={1.8}
-            />
-          </mesh>
-          {/* Identity beacon above the head */}
-          <mesh position={[agent.x, 1.62, 0]}>
-            <octahedronGeometry args={[0.09, 0]} />
-            <meshStandardMaterial
-              color={agent.color}
-              emissive={agent.color}
-              emissiveIntensity={2.4}
-            />
-          </mesh>
-        </group>
-      ))}
-      {/* Table light under the pavilion */}
-      <pointLight position={[0, 1.1, 0]} color="#fff6ec" intensity={5} distance={3.5} />
+      <CrystalAgent position={[-1.35, 0, 0]} color="#ec4899" />
+      <CrystalAgent position={[1.35, 0, 0]} color="#22d3ee" timeOffset={2.1} />
       <HoloScreen position={[-1.05, 1.15, 0.55]} rotation={[0, 0.5, 0.06]} color="#ec4899" />
       <HoloScreen position={[1.05, 1.15, -0.55]} rotation={[0, Math.PI - 0.5, -0.06]} color="#22d3ee" />
 
