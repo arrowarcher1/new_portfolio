@@ -25,7 +25,7 @@ export const FEATURED_PROJECTS = [
     ],
     link: 'https://github.com/arrowarcher1/Converge',
     linkLabel: 'View on GitHub',
-    image: '/images/converge-convo.png',
+    image: '/images/converge-convo.webp',
     color: '#ec4899',
   },
   {
@@ -43,7 +43,7 @@ export const FEATURED_PROJECTS = [
     ],
     link: 'https://devpost.com/software/truth-trail',
     linkLabel: 'View on Devpost',
-    image: '/images/truth-trail.jpg',
+    image: '/images/truth-trail.webp',
     color: '#34d399',
   },
   {
@@ -61,7 +61,7 @@ export const FEATURED_PROJECTS = [
     ],
     link: 'https://devpost.com/software/profpair',
     linkLabel: 'View on Devpost',
-    image: '/images/profpair.jpg',
+    image: '/images/profpair.webp',
     color: '#22d3ee',
   },
 ]
@@ -86,7 +86,7 @@ export const ARCHIPELAGO_PROJECTS = [
   {
     id: 'portfolio',
     title: 'This Portfolio',
-    tagline: 'The world you are floating through right now',
+    tagline: 'The scroll-linked system you are moving through right now',
     tech: ['Three.js', 'React Three Fiber', 'Vite'],
     link: 'https://andrewvo.dev',
     color: '#fb7185',
@@ -95,9 +95,27 @@ export const ARCHIPELAGO_PROJECTS = [
 
 export const EXPERIENCES = [
   {
+    role: 'Software Engineer Intern',
+    company: 'Vitu',
+    period: 'Jun 2026 — Present',
+    location: 'Agoura Hills, California · On-site',
+    logo: '/images/logos/vitu.svg',
+    tech: ['Cryptography', 'Ledger Architecture', 'Capability Security', 'Distributed Systems'],
+    summary:
+      'Working on digital vehicle-titling infrastructure focused on turning state DMV title records into a cryptographically verifiable custody registry.',
+    bullets: [
+      'Designing trusted digital workflows for dealers, auctions, lenders, and buyers to verify ownership, coordinate lien release, and initiate title transfer',
+      'Shaping the system architecture and trust model around scoped capability codes and verifiable ledger proofs',
+      'Modeling lien and settlement choreography with privacy-aware ownership verification across DMVs, banks, marketplaces, and buyers',
+    ],
+    color: '#c7ff22',
+  },
+  {
     role: 'Capstone Software Engineer',
     company: 'Oracle',
+    logo: '/images/logos/oracle.svg',
     period: 'Jan 2026 — Present',
+    location: 'Capstone · Lehigh University',
     tech: ['Go', 'Solidity', 'TypeScript', 'Docker', 'Kubernetes'],
     bullets: [
       'Implementing authorization capabilities chaincode in Go for Oracle Blockchain Platform — spec research, system design, and core operations for credential delegation and verification',
@@ -109,7 +127,9 @@ export const EXPERIENCES = [
   {
     role: 'Compiler Research Intern',
     company: 'Lehigh University',
+    logo: '/images/logos/lehigh.svg',
     period: 'May 2025 — Present',
+    location: 'Bethlehem, Pennsylvania',
     tech: ['LLVM', 'C++', 'RDMA', 'NVM'],
     bullets: [
       'Developed Serenity compiler using LLVM-based optimizations for NVM and RDMA — 7× throughput over SSD, 60% storage cost reduction',
@@ -120,7 +140,9 @@ export const EXPERIENCES = [
   {
     role: 'Software Engineer Intern',
     company: 'Vomar Products',
+    logo: '/images/logos/vomar-products.png',
     period: 'Dec 2025 — Jan 2026',
+    location: 'On-site',
     tech: ['Node.js', 'React', 'SQL Server', 'Socket.io'],
     bullets: [
       'Architected a full-stack production tracking platform for 50+ employees — 75% faster job lookups with real-time WebSocket updates across 166+ concurrent jobs',
