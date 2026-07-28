@@ -26,6 +26,7 @@ export const FEATURED_PROJECTS = [
     link: 'https://github.com/arrowarcher1/Converge',
     linkLabel: 'View on GitHub',
     image: '/images/converge-convo.webp',
+    imageAlt: 'Converge UI showing two AI agents negotiating with live transcripts',
     color: '#ec4899',
   },
   {
@@ -44,6 +45,7 @@ export const FEATURED_PROJECTS = [
     link: 'https://devpost.com/software/truth-trail',
     linkLabel: 'View on Devpost',
     image: '/images/truth-trail.webp',
+    imageAlt: 'Truth Trail forensic evidence dashboard with chain-of-custody trail',
     color: '#34d399',
   },
   {
@@ -62,6 +64,7 @@ export const FEATURED_PROJECTS = [
     link: 'https://devpost.com/software/profpair',
     linkLabel: 'View on Devpost',
     image: '/images/profpair.webp',
+    imageAlt: 'ProfPair professor–student matching interface with review insights',
     color: '#22d3ee',
   },
 ]
@@ -86,7 +89,7 @@ export const ARCHIPELAGO_PROJECTS = [
   {
     id: 'portfolio',
     title: 'This Portfolio',
-    tagline: 'The scroll-linked system you are moving through right now',
+    tagline: 'This site — React, Three.js, and deliberate motion',
     tech: ['Three.js', 'React Three Fiber', 'Vite'],
     link: 'https://andrewvo.dev',
     color: '#fb7185',
@@ -128,7 +131,7 @@ export const EXPERIENCES = [
     role: 'Compiler Research Intern',
     company: 'Lehigh University',
     logo: '/images/logos/lehigh.svg',
-    period: 'May 2025 — Present',
+    period: 'May 2025 — Feb 2026',
     location: 'Bethlehem, Pennsylvania',
     tech: ['LLVM', 'C++', 'RDMA', 'NVM'],
     bullets: [
@@ -140,9 +143,10 @@ export const EXPERIENCES = [
   {
     role: 'Software Engineer Intern',
     company: 'Vomar Products',
-    logo: '/images/logos/vomar-products.png',
+    // Clean wordmark (user-provided); mono transparent PNG for dark UI
+    logo: '/images/logos/vomar.png',
     period: 'Dec 2025 — Jan 2026',
-    location: 'On-site',
+    location: 'Canoga Park, California · On-site',
     tech: ['Node.js', 'React', 'SQL Server', 'Socket.io'],
     bullets: [
       'Architected a full-stack production tracking platform for 50+ employees — 75% faster job lookups with real-time WebSocket updates across 166+ concurrent jobs',

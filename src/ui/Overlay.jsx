@@ -83,10 +83,11 @@ function About() {
           Systems that ship
         </h2>
         <p className="text-mist-200 leading-relaxed text-sm md:text-base">
-          I'm a student at <span className="text-aurora-cyan">Lehigh University</span> (GPA 3.71)
-          pursuing a B.S. in Computer Science &amp; Business — currently building enterprise
-          blockchain at <span className="text-aurora-amber">Oracle</span> and researching compiler
-          optimizations for next-gen memory architectures.
+          I&apos;m a student at <span className="text-aurora-cyan">Lehigh University</span> (GPA 3.71)
+          pursuing a B.S. in Computer Science &amp; Business — currently building digital titling
+          infrastructure at <span className="text-aurora-cyan">Vitu</span> and enterprise blockchain
+          through my <span className="text-aurora-amber">Oracle</span> capstone. Previously I
+          researched LLVM compiler optimizations for next-gen memory architectures.
         </p>
         <p className="text-mist-300 leading-relaxed text-sm md:text-base mt-4">
           From decentralized identity systems to real-time production platforms, my work spans
@@ -96,8 +97,8 @@ function About() {
           {[
             ['Education', 'B.S. CS & Business'],
             ['Graduation', 'December 2026'],
-            ['Current', 'Capstone SWE @ Oracle'],
-            ['Research', 'LLVM / NVM / RDMA'],
+            ['Current', 'SWE Intern @ Vitu'],
+            ['Focus', 'LLVM / NVM / RDMA'],
           ].map(([label, value]) => (
             <div key={label} className="rounded-lg border border-mist-500/20 bg-void-900/40 p-3">
               <p className="font-mono text-[0.6rem] uppercase tracking-widest text-aurora-fuchsia/80">

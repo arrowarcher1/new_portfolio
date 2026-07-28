@@ -36,9 +36,10 @@ export default function StaticFallback() {
         <section>
           <h2 className="section-label mb-4">About</h2>
           <p className="leading-relaxed text-mist-200">
-            I'm a student at Lehigh University (GPA 3.71) pursuing a B.S. in Computer Science &amp;
-            Business — currently building enterprise blockchain at Oracle and researching compiler
-            optimizations for next-gen memory architectures. From decentralized identity systems to
+            I&apos;m a student at Lehigh University (GPA 3.71) pursuing a B.S. in Computer Science &amp;
+            Business — currently building digital titling infrastructure at Vitu and enterprise
+            blockchain through my Oracle capstone. Previously I researched LLVM compiler optimizations
+            for next-gen memory architectures at Lehigh. From decentralized identity systems to
             real-time production platforms, my work spans blockchain, ML/AI, compiler design, and
             systems engineering.
           </p>
